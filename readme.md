@@ -1,15 +1,13 @@
-# Fedora 41/42 no Samsung Galaxy Book4 Ultra
+# Fedora 42 Workstation no Samsung Galaxy Book4 Ultra
 
+> [!IMPORTANT]
 > **Atualizado em julho de 2025**
 >
-> Este guia reúne explicações técnicas, soluções práticas e informações úteis para usuários do Fedora 41/42 no Samsung Galaxy Book4 Ultra, com foco em áudio, câmera, leitor de digital e drivers NVIDIA.
-
-O kernel 6.15+ é o mínimo recomendado para qualquer tentativa de workaround, pois muitos relatos mostram que versões anteriores não detectam corretamente o hardware do Galaxy Book4 Ultra.
-
+> Este guia reúne explicações técnicas, soluções práticas e informações úteis para usuários do Fedora 42 no Samsung Galaxy Book4 Ultra, com foco em áudio, câmera, leitor de digital e drivers NVIDIA.
 
 | Especificação         | Detalhes                                                                            |
 | --------------------- | :---------------------------------------------------------------------------------- |
-| **Modelo**            | Samsung Galaxy Book4 Ultra (NP960XGL, NP960XGL-XG1BR, etc.)                         |
+| **Modelo**            | Samsung Galaxy Book4 Ultra (NP960XGL, NP960XGL-XG1BR, NP960XGLZ-EXP...)                         |
 | **Tela**              | 16" WQXGA+ (2880 x 1800) AMOLED Touchscreen                                         |
 | **Processador**       | Intel Core Ultra 9 185H (Meteor Lake, 16C/22T, até 5.1 GHz, 24 MB cache)            |
 | **GPU**               | NVIDIA GeForce RTX 4070 Laptop 8 GB GDDR6                                           |
@@ -28,14 +26,19 @@ O kernel 6.15+ é o mínimo recomendado para qualquer tentativa de workaround, p
 | **Outros**            | Sensor de luz ambiente, suporte a Samsung Multi Control, Second Screen, Quick Share |
 | **Certificações**     | ENERGY STAR, RoHS, FCC, CE                                                          |
 
-* [Samsung Galaxy Book4 Ultra - Manual do Usuário](https://downloadcenter.samsung.com/content/UM/202506/20250618100447559/94xXGK_96xXGK_96xXGL_Win11_UM_ENG_Rev.2.0_250602.pdf)
-* [Samsung Galaxy Book4 Ultra - Especificações](https://www.samsung.com/br/support/model/NP960XGL-XG1BR/)
+* [Manual do Usuário](https://downloadcenter.samsung.com/content/UM/202506/20250618100447559/94xXGK_96xXGK_96xXGL_Win11_UM_ENG_Rev.2.0_250602.pdf)
+* [Especificações](https://www.samsung.com/br/support/model/NP960XGL-XG1BR/)
+
+> [!TIP]
+> **Kernel recomendado:** Utilize o kernel **6.15 ou superior** para garantir o reconhecimento adequado do hardware do Galaxy Book4 Ultra. Versões anteriores apresentam limitações significativas de compatibilidade.
+>
+> Ferramentas como o [samsung-galaxybook-extras](https://github.com/joshuagrisham/samsung-galaxybook-extras) podem facilitar a configuração inicial e aplicar ajustes específicos para este modelo.
 
 ---
 
 ## Índice
 
-- [Fedora 41/42 no Samsung Galaxy Book4 Ultra](#fedora-4142-no-samsung-galaxy-book4-ultra)
+- [Fedora 42 Workstation no Samsung Galaxy Book4 Ultra](#fedora-42-workstation-no-samsung-galaxy-book4-ultra)
   - [Índice](#índice)
   - [Incompatibilidades](#incompatibilidades)
   - [Alto-falantes Internos (Realtek ALC298)](#alto-falantes-internos-realtek-alc298)
@@ -51,13 +54,14 @@ O kernel 6.15+ é o mínimo recomendado para qualquer tentativa de workaround, p
     - [Solução: Instalação do driver NVIDIA](#solução-instalação-do-driver-nvidia)
     - [Verificação](#verificação-3)
   - [Diagnósticos Rápidos](#diagnósticos-rápidos)
+  - [Outros Relatos](#outros-relatos)
 
 ---
 
 ## Incompatibilidades
 
 
-| Componente            |  Status Fedora 41/42  | Causa técnica resumida                                                             |
+| Componente            |  Status Fedora 42  | Causa técnica resumida                                                             |
 | --------------------- | :-------------------: | ---------------------------------------------------------------------------------- |
 | **Áudio interno**     |     Não funciona      | Codec Realtek ALC298 não inicializa amplificador dos alto-falantes automaticamente |
 | **Câmera interna**    |     Não funciona      | Driver IPU6 OV02C10 não aceita clock de 26 MHz, necessário para o sensor Samsung   |
@@ -69,7 +73,9 @@ O kernel 6.15+ é o mínimo recomendado para qualquer tentativa de workaround, p
 
 ## Alto-falantes Internos (Realtek ALC298)
 
-O Galaxy Book4 Ultra usa o codec **Realtek ALC298**. No Linux, o driver detecta o hardware, mas **não ativa automaticamente o amplificador dos alto-falantes internos**. Resultado: som apenas via HDMI, Bluetooth ou fone de ouvido. Nos meus testes com Fedora 41/42, usando o [script do GitHub](https://github.com/joshuagrisham/galaxy-book2-pro-linux/blob/main/sound/necessary-verbs.sh) e os passos abaixo, consegui fazer o com que ao menos os alto-falantes fossem reconhecidos, mas ainda sem som.
+O Galaxy Book4 Ultra usa o codec **Realtek ALC298**. No Linux, o driver detecta o hardware, mas **não ativa automaticamente o amplificador dos alto-falantes internos**. Resultado: som apenas via HDMI, Bluetooth ou fone de ouvido. Nos meus testes com Fedora 42, usando o [script do GitHub](https://github.com/joshuagrisham/galaxy-book2-pro-linux/blob/main/sound/necessary-verbs.sh) e os passos abaixo, consegui fazer o com que ao menos os alto-falantes fossem reconhecidos, mas ainda sem funcionamento.
+
+![alt text](img/settings-audio.png)
 
 ### Solução parcial: Script de Inicialização (HDA Verb)
 
@@ -127,7 +133,9 @@ Não emite som e não retorna erro.
 
 ## Câmera Interna (IPU6/OV02C10)
 
-Driver presente no kernel 6.15+ detecta a OV02C10, mas **recusa o clock de 26 MHz** usado pela Samsung, aceitando apenas 19.2 MHz.
+O driver incluso no kernel 6.15 ou superior, reconhece o sensor OmniVision OV02C10, porém **não suporta o clock de 26 MHz** utilizado pela Samsung neste modelo, aceitando apenas sensores configurados para 19.2 MHz. Embora alguns usuários do **Galaxy Book3 Ultra** (NP960XFHZ-EXP) tenham conseguido utilizar a câmera interna, isso ocorreu porque o sensor deles, apesar de ser o mesmo modelo, opera em 19.2 MHz — diferente do **Galaxy Book4 Ultra** (NP960XGLZ-EXP), que permanece incompatível devido à diferença de clock.
+
+![alt text](img/app-camera.png)
 
 ### Solução parcial: usar webcam USB
 
@@ -153,6 +161,8 @@ O driver IPU6 não aceita o clock de 26 MHz necessário para a câmera interna.
 ## Leitor de Digital (Fingerprint)
 
 O sensor é detectado via `fprintd`, mas pode falhar após suspensão ou não aceitar cadastro.
+
+![alt text](img/settings-fingerprint.png)
 
 ### Solução parcial: reinstalar `fprintd` e `libfprint`, reconfigurar o sensor.
 
@@ -184,6 +194,8 @@ O sensor não consegue localizar a digital cadastrada anteriormente.
 ## Chip de Gráficos dedicado (NVIDIA RTX 4070)
 
 Funciona bem com RPM Fusion, mas requer atenção com updates de kernel e Secure Boot com processo de MOK.
+
+![alt text](img/settings-gpu.png)
 
 ### Solução: Instalação do driver NVIDIA
 
@@ -231,3 +243,8 @@ O driver NVIDIA não está carregado corretamente ou o Secure Boot está bloquea
 | **Câmera**  | `v4l2-ctl --list-devices && sudo dmesg \| grep -i ov02c10 && sudo dmesg \| grep -i sensor && lsmod \| grep ov02c10` |
 | **Digital** | `fprintd-verify && journalctl -b \| grep -i fprint`                                                                 |
 | **NVIDIA**  | `nvidia-smi && lsmod \| grep nvidia && sudo dmesg \| grep nvidia`                                                   |
+
+## Outros Relatos
+
+- [Relato de tentativa de engenharia reversa](https://github.com/dgunay/galaxy-book4-pro-reverse-engineering)
+- [Relato com uso do Fedora 42 (KDE) com medições de desempenho da Intel Xe Iris](https://github.com/jusqua/galaxy-book4-linux)
