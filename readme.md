@@ -50,7 +50,7 @@
   - [Leitor de Digital (Fingerprint)](#leitor-de-digital-fingerprint)
     - [Solução parcial: reinstalar `fprintd` e `libfprint`, reconfigurar o sensor.](#solução-parcial-reinstalar-fprintd-e-libfprint-reconfigurar-o-sensor)
     - [Verificação](#verificação-2)
-  - [Chip de Gráficos dedicado (NVIDIA RTX 4070)](#chip-de-gráficos-dedicado-nvidia-rtx-4070)
+  - [Chip de Gráficos dedicados (NVIDIA RTX 4070)](#chip-de-gráficos-dedicados-nvidia-rtx-4070)
     - [Solução: Instalação do driver NVIDIA](#solução-instalação-do-driver-nvidia)
     - [Verificação](#verificação-3)
   - [Diagnósticos Rápidos](#diagnósticos-rápidos)
@@ -191,7 +191,7 @@ O sensor não consegue localizar a digital cadastrada anteriormente.
 
 ---
 
-## Chip de Gráficos dedicado (NVIDIA RTX 4070)
+## Chip de Gráficos dedicados (NVIDIA RTX 4070)
 
 Funciona bem com RPM Fusion, mas requer atenção com updates de kernel e Secure Boot com processo de MOK.
 
