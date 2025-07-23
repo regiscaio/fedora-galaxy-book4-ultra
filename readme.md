@@ -5,26 +5,27 @@
 >
 > Este guia reúne explicações técnicas, soluções práticas e informações úteis para usuários do Fedora 42 no Samsung Galaxy Book4 Ultra, com foco em áudio, câmera, leitor de digital e drivers NVIDIA.
 
-| Especificação         | Detalhes                                                                            |
-| --------------------- | :---------------------------------------------------------------------------------- |
-| **Modelo**            | Samsung Galaxy Book4 Ultra (NP960XGL, NP960XGL-XG1BR, NP960XGLZ-EXP...)                         |
-| **Tela**              | 16" WQXGA+ (2880 x 1800) AMOLED Touchscreen                                         |
+
+| Especificação       | Detalhes                                                                             |
+| ----------------------- | :------------------------------------------------------------------------------------- |
+| **Modelo**            | Samsung Galaxy Book4 Ultra (NP960XGL, NP960XGL-XG1BR, NP960XGLZ-EXP...)              |
+| **Tela**              | 16" WQXGA+ (2880 x 1800) AMOLED Touchscreen                                          |
 | **Processador**       | Intel Core Ultra 9 185H (Meteor Lake, 16C/22T, até 5.1 GHz, 24 MB cache)            |
-| **GPU**               | NVIDIA GeForce RTX 4070 Laptop 8 GB GDDR6                                           |
-| **Memória RAM**       | 32 GB LPDDR5X (soldada, não expansível)                                             |
-| **Armazenamento**     | 1 TB SSD NVMe PCIe Gen4 (expansível via slot M.2 secundário, dependendo do modelo)  |
-| **Bateria**           | 76 Wh (integrada, íon-lítio)                                                        |
-| **Carregador**        | 140 W USB-C (20V, 5A ou 28V, 5A)                                                    |
+| **GPU**               | NVIDIA GeForce RTX 4070 Laptop 8 GB GDDR6                                            |
+| **Memória RAM**      | 32 GB LPDDR5X (soldada, não expansível)                                            |
+| **Armazenamento**     | 1 TB SSD NVMe PCIe Gen4 (expansível via slot M.2 secundário, dependendo do modelo) |
+| **Bateria**           | 76 Wh (integrada, íon-lítio)                                                       |
+| **Carregador**        | 140 W USB-C (20V, 5A ou 28V, 5A)                                                     |
 | **Portas**            | 2x Thunderbolt 4 (USB-C), 1x HDMI 2.1, 1x USB-A 3.2, 1x P2 (áudio), 1x MicroSD      |
-| **Rede sem fio**      | Wi-Fi 6E (802.11ax), Bluetooth 5.3                                                  |
-| **Webcam**            | 1080p FHD, sensor OmniVision OV02C10, IPU6 (MIPI)                                   |
-| **Áudio**             | 2x Alto-falantes estéreo (AKG), microfone duplo, codec Realtek ALC298               |
-| **Teclado**           | Teclado retroiluminado, layout ABNT2 (BR) ou US, sensor de digital integrado        |
+| **Rede sem fio**      | Wi-Fi 6E (802.11ax), Bluetooth 5.3                                                   |
+| **Webcam**            | 1080p FHD, sensor OmniVision OV02C10, IPU6 (MIPI)                                    |
+| **Áudio**            | 2x Alto-falantes estéreo (AKG), microfone duplo, codec Realtek ALC298               |
+| **Teclado**           | Teclado retroiluminado, layout ABNT2 (BR) ou US, sensor de digital integrado         |
 | **Touchpad**          | Amplo, compatível com gestos Windows Precision                                      |
-| **Leitor de Digital** | Integrado ao botão power, compatível com Windows Hello                              |
-| **Dimensões**         | 355,4 x 250,4 x 16,5 mm                                                             |
-| **Outros**            | Sensor de luz ambiente, suporte a Samsung Multi Control, Second Screen, Quick Share |
-| **Certificações**     | ENERGY STAR, RoHS, FCC, CE                                                          |
+| **Leitor de Digital** | Integrado ao botão power, compatível com Windows Hello                             |
+| **Dimensões**        | 355,4 x 250,4 x 16,5 mm                                                              |
+| **Outros**            | Sensor de luz ambiente, suporte a Samsung Multi Control, Second Screen, Quick Share  |
+| **Certificações**   | ENERGY STAR, RoHS, FCC, CE                                                           |
 
 * [Manual do Usuário](https://downloadcenter.samsung.com/content/UM/202506/20250618100447559/94xXGK_96xXGK_96xXGL_Win11_UM_ENG_Rev.2.0_250602.pdf)
 * [Especificações](https://www.samsung.com/br/support/model/NP960XGL-XG1BR/)
@@ -33,7 +34,7 @@
 > **Kernel recomendado:** Utilize o kernel **6.15 ou superior** para garantir o reconhecimento adequado do hardware do Galaxy Book4 Ultra. Versões anteriores apresentam limitações significativas de compatibilidade.
 >
 > Ferramentas como o [samsung-galaxybook-extras](https://github.com/joshuagrisham/samsung-galaxybook-extras) podem facilitar a configuração inicial e aplicar ajustes específicos para este modelo.
-> 
+>
 > Caso você não seja um usuário avançado, recomendo que use o Windows 11, que já vem instalado de fábrica e funciona perfeitamente neste modelo.
 
 ---
@@ -63,34 +64,46 @@
 ## Incompatibilidades
 
 
-| Componente            |  Status Fedora 42  | Causa técnica resumida                                                             |
-| --------------------- | :-------------------: | ---------------------------------------------------------------------------------- |
-| **Áudio interno**     |     Não funciona      | Codec Realtek ALC298 não inicializa amplificador dos alto-falantes automaticamente |
-| **Câmera interna**    |     Não funciona      | Driver IPU6 OV02C10 não aceita clock de 26 MHz, necessário para o sensor Samsung   |
-| **Leitor de digital** |   Parcial/instável    | libfprint não suporta todos os sensores, problemas pós-suspensão                   |
-| **NVIDIA RTX 4070**   | Funciona c/ ressalvas | Driver proprietário pode falhar após update de kernel, Secure Boot pode bloquear   |
-| **BIOS/Firmware**     |    Riscos recentes    | Updates recentes causam throttling, falhas em docks e Bluetooth                    |
+| Componente            |   Status Fedora 42   | Causa técnica resumida                                                                   |
+| ----------------------- | :---------------------: | ------------------------------------------------------------------------------------------- |
+| **Áudio interno**    |     Não funciona     | Driver ALSA não ativa alto-falantes internos (bug), apenas HDMI/Bluetooth/Fone de ouvido |
+| **Câmera interna**   |     Não funciona     | Driver IPU6 OV02C10 não aceita clock de 26 MHz, necessário para o sensor Samsung        |
+| **Leitor de digital** |   Parcial/instável   | libfprint não suporta todos os sensores, problemas pós-suspensão                       |
+| **NVIDIA RTX 4070**   | Funciona c/ ressalvas | Driver proprietário pode falhar após update de kernel, Secure Boot pode bloquear        |
+| **BIOS/Firmware**     |    Riscos recentes    | Updates recentes causam throttling, falhas em docks e Bluetooth                           |
 
 ---
 
 ## Alto-falantes Internos (Realtek ALC298)
 
-O Galaxy Book4 Ultra usa o codec **Realtek ALC298**. No Linux, o driver detecta o hardware, mas **não ativa automaticamente o amplificador dos alto-falantes internos**. Resultado: som apenas via HDMI, Bluetooth ou fone de ouvido. Nos meus testes com Fedora 42, usando o [script do GitHub](https://github.com/joshuagrisham/galaxy-book2-pro-linux/blob/main/sound/necessary-verbs.sh) e os passos abaixo, consegui fazer o com que ao menos os alto-falantes fossem reconhecidos, mas ainda sem funcionamento.
+O Galaxy Book4 Ultra usa o codec **Realtek ALC298**. Embora o Linux reconheça corretamente o hardware, existe atualmente uma limitação no driver ALSA que faz com que **o amplificador dos alto-falantes internos não seja ativado automaticamente** pelo sistema operacional. Como consequência, o som só funciona via HDMI, Bluetooth ou fones de ouvido, porém, os alto-falantes internos permanecem desligados, mesmo com o dispositivo detectado no sistema.
+
+> [!IMPORTANT]
+> Relatei no [bugzilla.kernel.org](https://bugzilla.kernel.org/show_bug.cgi?id=220363), que o kernel associa o hardware e, em logs avançados (anexo `alsa-info.log`), é possível ver o modelo do codec, mas a ausência de roteamento adequado (“speaker_outs=0”) no fixup do ALSA, impede o funcionamento do canal de alto-falantes internos. Nessa situação, apenas correções no driver/ALSA resolverá.
 
 ![alt text](img/settings-audio.png)
 
 ### Solução parcial: Script de Inicialização (HDA Verb)
 
+Apesar das limitações do kernel/driver, pode ser útil automatizar a tentativa de ativação do amplificador via script, tanto para facilitar novos testes quanto para documentar para futuras correções upstream.
+
 1. Instale ferramentas:
 
 ```bash
-sudo dnf install alsa-tools sof-firmware
+sudo dnf install alsa-tools alsa-sof-firmware
 ```
 
 2. Crie o script de inicialização com comandos HDA adequados:
 
 ```bash
-sudo tee /usr/local/bin/galaxy-book4-audio-fix.sh
+sudo tee /usr/local/bin/galaxy-book4-audio-fix.sh << EOF
+#!/bin/bash
+HDA_DEV="/dev/snd/hwC0D0"
+hda-verb \$HDA_DEV 0x20 0x500 0x45
+hda-verb \$HDA_DEV 0x20 0x501 0x3000
+hda-verb \$HDA_DEV 0x1a 0x707 0xc5
+hda-verb \$HDA_DEV 0x1a 0x3 0x00
+EOF
 ```
 
 3. Dê permissão e crie o service:
@@ -99,9 +112,10 @@ sudo tee /usr/local/bin/galaxy-book4-audio-fix.sh
 sudo chmod +x /usr/local/bin/galaxy-book4-audio-fix.sh
 ```
 
-Crie `/etc/systemd/system/speaker-init.service` com:
+Crie o arquivo `/etc/systemd/system/speaker-init.service` com:
 
 ```bash
+sudo tee /etc/systemd/system/speaker-init.service << EOF
 [Unit]
 Description=Galaxy Book Speaker Fix
 After=sound.target
@@ -114,28 +128,38 @@ ExecStart=/usr/local/bin/galaxy-book4-audio-fix.sh
 WantedBy=multi-user.target
 ```
 
-4. Ative:
+4. Ative o serviço systemd:
 
 ```bash
 sudo systemctl enable --now speaker-init.service
 ```
 
 ### Verificação
+
+Para testar se houve efeito, utilize:
+
 ```bash
 speaker-test -c 2 -t wav
 ```
 
-Erro comum:
-
-```
-Não emite som e não retorna erro.
-```
+> [!CAUTION]
+> **Erro comum**:
+> O comando executa, mas não há som e não retorna erro – indicando exatamente o bug do roteamento/fixup.
+>
+> Durante os testes, utilizei também o [script `necessary-verbs.sh`](https://github.com/joshuagrisham/galaxy-book2-pro-linux/blob/main/sound/necessary-verbs.sh), mas **não recomendo seu uso integral no Book4 Ultra** pois:
+>
+> - Executa sequências para múltiplos modelos Samsung que podem não existir no Book4 Ultra;
+> - Pode deixar o subsistema de áudio em estado inconsistente;
+> - O bug central está no fixup do driver ALSA, não superado por scripts de configuração;
 
 ---
 
 ## Câmera Interna (IPU6/OV02C10)
 
 O driver incluso no kernel 6.15 ou superior, reconhece o sensor OmniVision OV02C10, porém **não suporta o clock de 26 MHz** utilizado pela Samsung neste modelo, aceitando apenas sensores configurados para 19.2 MHz. Embora alguns usuários do **Galaxy Book3 Ultra** (NP960XFHZ-EXP) tenham conseguido utilizar a câmera interna, isso ocorreu porque o sensor deles, apesar de ser o mesmo modelo, opera em 19.2 MHz — diferente do **Galaxy Book4 Ultra** (NP960XGLZ-EXP), que permanece incompatível devido à diferença de clock.
+
+> [!IMPORTANT]
+> Relatei o problema no [bugzilla.kernel.org](https://bugzilla.kernel.org/show_bug.cgi?id=220364), explicando a questão do clock e a incompatibilidade com o sensor OV02C10. A solução definitiva depende de correções no driver IPU6.
 
 ![alt text](img/app-camera.png)
 
@@ -149,14 +173,12 @@ Ainda não há solução parcial ou definitiva para a câmera interna. A melhor 
 v4l2-ctl --list-devices
 ```
 
-Erro comum:
-
-```
-external clock 26000000 is not supported
-probe with driver ov02c10 failed with error -22
-```
-
-O driver IPU6 não aceita o clock de 26 MHz necessário para a câmera interna.
+> [!CAUTION]
+> **Erro comum**:
+> ```external clock 26000000 is not supported ```
+> ```probe with driver ov02c10 failed with error -22```
+>
+> O driver IPU6 não consegue inicializar o sensor OV02C10 devido à incompatibilidade de clock. Isso é esperado, pois o sensor da Samsung no Galaxy Book4 Ultra não é compatível com o clock de 19.2 MHz utilizado por outros modelos. Cogitei de tentar **engenharia reversa** para ajustar o clock, mas isso é **complexo** e **arriscado**, podendo **danificar o hardware.**
 
 ---
 
@@ -183,13 +205,11 @@ sudo authselect apply-changes
 fprintd-verify
 ```
 
-Erro comum:
-
-```
-Failed to discover prints
-```
-
-O sensor não consegue localizar a digital cadastrada anteriormente.
+> [!CAUTION]
+> **Erro comum**:
+> ```Failed to enroll fingerprint: Device or resource busy```
+>
+> Por algum motivo, o sensor pode estar ocupado ou não configurado corretamente na inicialização. Como consequência, não consegue localizar a digital cadastrada anteriormente e utilizá-la para autenticação.
 
 ---
 
@@ -225,14 +245,12 @@ Desative Secure Boot se for necessário.
 nvidia-smi
 ```
 
-Erro comum:
-
-```
-Unable to determine the device handle for GPU0: 0000:01:00.0: Unknown Error
-No devices were found
-```
-
-O driver NVIDIA não está carregado corretamente ou o Secure Boot está bloqueando o módulo.
+> [!CAUTION]
+> **Erro comum**:
+> ```Unable to determine the device handle for GPU0: 0000:01:00.0: Unknown Error```
+> ```No devices were found```
+>
+> O driver NVIDIA não está carregado corretamente ou o Secure Boot está bloqueando o módulo. Isso acontece a cada atualização de kernel, então pode ser necessário reinstalar o driver e configurar. Apesar de prático, ao optar por desativar o Secure Boot você perde a segurança adicional que ele oferece, então faça por sua conta e risco.
 
 ---
 
@@ -242,9 +260,9 @@ O driver NVIDIA não está carregado corretamente ou o Secure Boot está bloquea
 | :---------- | :------------------------------------------------------------------------------------------------------------------ |
 | **Kernel**  | `uname -r`                                                                                                          |
 | **Áudio**   | `aplay -l && speaker-test -c 2 -t wav`                                                                            |
-| **Câmera**  | `v4l2-ctl --list-devices && sudo dmesg \| grep -i ov02c10 && sudo dmesg \| grep -i sensor && lsmod \| grep ov02c10` |
+| **Câmera**  | `v4l2-ctl --list-devices && sudo dmesg \| grep -i ov02c10 \|\| sudo dmesg \| grep -i sensor \|\| lsmod \| grep ov02c10` |
 | **Digital** | `fprintd-verify && journalctl -b \| grep -i fprint`                                                                 |
-| **NVIDIA**  | `nvidia-smi && lsmod \| grep nvidia && sudo dmesg \| grep nvidia`                                                   |
+| **NVIDIA**  | `nvidia-smi && lsmod \| grep nvidia \|\| sudo dmesg \| grep nvidia`                                                   |
 
 ## Outros Relatos
 
