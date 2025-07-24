@@ -126,6 +126,7 @@ ExecStart=/usr/local/bin/galaxy-book4-audio-fix.sh
 
 [Install]
 WantedBy=multi-user.target
+EOF
 ```
 
 4. Ative o serviço systemd:
@@ -175,7 +176,7 @@ v4l2-ctl --list-devices
 
 > [!CAUTION]
 > **Erro comum**:
-> ```external clock 26000000 is not supported ```
+> ```external clock 26000000 is not supported ``` \
 > ```probe with driver ov02c10 failed with error -22```
 >
 > O driver IPU6 não consegue inicializar o sensor OV02C10 devido à incompatibilidade de clock. Isso é esperado, pois o sensor da Samsung no Galaxy Book4 Ultra não é compatível com o clock de 19.2 MHz utilizado por outros modelos. Cogitei de tentar **engenharia reversa** para ajustar o clock, mas isso é **complexo** e **arriscado**, podendo **danificar o hardware.**
@@ -247,7 +248,7 @@ nvidia-smi
 
 > [!CAUTION]
 > **Erro comum**:
-> ```Unable to determine the device handle for GPU0: 0000:01:00.0: Unknown Error```
+> ```Unable to determine the device handle for GPU0: 0000:01:00.0: Unknown Error``` \
 > ```No devices were found```
 >
 > O driver NVIDIA não está carregado corretamente ou o Secure Boot está bloqueando o módulo. Isso acontece a cada atualização de kernel, então pode ser necessário reinstalar o driver e configurar. Apesar de prático, ao optar por desativar o Secure Boot você perde a segurança adicional que ele oferece, então faça por sua conta e risco.
@@ -260,9 +261,9 @@ nvidia-smi
 | :---------- | :------------------------------------------------------------------------------------------------------------------ |
 | **Kernel**  | `uname -r`                                                                                                          |
 | **Áudio**   | `aplay -l && speaker-test -c 2 -t wav`                                                                            |
-| **Câmera**  | `v4l2-ctl --list-devices && sudo dmesg \| grep -i ov02c10 \|\| sudo dmesg \| grep -i sensor \|\| lsmod \| grep ov02c10` |
+| **Câmera**  | `v4l2-ctl --list-devices && sudo dmesg \| grep -i ov02c10 && dmesg \| grep -i cam && lsmod \| grep ov02c10` |
 | **Digital** | `fprintd-verify && journalctl -b \| grep -i fprint`                                                                 |
-| **NVIDIA**  | `nvidia-smi && lsmod \| grep nvidia \|\| sudo dmesg \| grep nvidia`                                                   |
+| **NVIDIA**  | `nvidia-smi && lsmod \| grep nvidia && sudo dmesg \| grep nvidia`                                                   |
 
 ## Outros Relatos
 
