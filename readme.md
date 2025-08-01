@@ -261,7 +261,7 @@ nvidia-smi
 | :---------- | :------------------------------------------------------------------------------------------------------------------ |
 | **Kernel**  | `uname -r`                                                                                                          |
 | **Áudio**   | `aplay -l && speaker-test -c 2 -t wav`                                                                            |
-| **Câmera**  | `v4l2-ctl --list-devices && sudo dmesg \| grep -i ov02c10 && dmesg \| grep -i cam && lsmod \| grep ov02c10` |
+| **Câmera**  | `v4l2-ctl --list-devices && sudo dmesg \| grep -i ov02c10 && sudo dmesg \| grep -i cam && lsmod \| grep ov02c10` |
 | **Digital** | `fprintd-verify && journalctl -b \| grep -i fprint`                                                                 |
 | **NVIDIA**  | `nvidia-smi && lsmod \| grep nvidia && sudo dmesg \| grep nvidia`                                                   |
 
