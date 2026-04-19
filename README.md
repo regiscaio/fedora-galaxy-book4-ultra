@@ -1,11 +1,19 @@
 # Fedora no Samsung Galaxy Book4 Ultra
 
 > [!IMPORTANT]
-> **Atualizado em 5 de abril de 2026**
+> **Atualizado em 19 de abril de 2026**
 >
 > Este guia reúne explicações técnicas, soluções práticas e informações úteis para usuários do Fedora no Samsung Galaxy Book4 Ultra, com foco em áudio, câmera, leitor de digital e drivers NVIDIA.
 >
 > O conteúdo histórico abaixo foi **revalidado em 5 de abril de 2026** em um **Samsung Galaxy Book4 Ultra NP960XGL-XG1BR**, rodando **Fedora 43** com kernel **6.18.8-200.fc43.x86_64**.
+>
+> A partir de **19 de abril de 2026**, a solução da câmera passou a ser mantida em repositórios dedicados, com driver, app de câmera com UI nativa do GNOME e assistente de instalação separados. Este README continua como guia geral do notebook e aponta para esses projetos quando o assunto é webcam.
+>
+> A linha atual dos projetos dedicados foi **verificada em 19 de abril de 2026** em um **Samsung Galaxy Book4 Ultra NP960XGL-XG1BR**, rodando **Fedora 44** com kernel **6.19.10-300.fc44.x86_64**, nas seguintes versões:
+>
+> - `fedora-galaxy-book-ov02c10`: **1.0.0-1**
+> - `fedora-galaxy-book-camera`: **1.0.0**
+> - `fedora-galaxy-book-setup`: **1.0.0**
 
 
 | Especificação       | Detalhes                                                                             |
@@ -45,6 +53,7 @@
 
 - [Fedora no Samsung Galaxy Book4 Ultra](#fedora-no-samsung-galaxy-book4-ultra)
   - [Índice](#índice)
+  - [Repositórios Dedicados](#repositórios-dedicados)
   - [Incompatibilidades](#incompatibilidades)
   - [Alto-falantes Internos (Realtek ALC298)](#alto-falantes-internos-realtek-alc298)
   - [Câmera Interna (IPU6/OV02C10)](#câmera-interna-ipu6ov02c10)
@@ -55,13 +64,115 @@
 
 ---
 
+## Repositórios Dedicados
+
+O trabalho deste notebook foi dividido em repositórios específicos para a câmera:
+
+- [`fedora-galaxy-book-ov02c10`](https://github.com/regiscaio/fedora-galaxy-book-ov02c10)
+  Driver `ov02c10` ajustado e empacotado como `akmod` para Fedora.
+- [`fedora-galaxy-book-camera`](https://github.com/regiscaio/fedora-galaxy-book-camera)
+  App de câmera com UI nativa do GNOME em `GTK4` e `libadwaita`, usando `libcamera`.
+- [`fedora-galaxy-book-setup`](https://github.com/regiscaio/fedora-galaxy-book-setup)
+  Auxiliar de instalação e diagnóstico com interface gráfica para câmera, webcam em navegadores/comunicadores, NVIDIA, perfil de uso `balanced` da plataforma e integrações do GNOME.
+
+Esses três projetos consolidam a solução atual da webcam no Galaxy Book4 Ultra e reduzem a necessidade de repetir scripts e workarounds soltos dentro deste guia principal.
+
+### Resumo da solução atual da câmera
+
+O fluxo que faz mais sentido hoje para quem quer usar a webcam no Fedora é:
+
+1. instalar o driver `ov02c10` empacotado em `fedora-galaxy-book-ov02c10`;
+2. instalar o app `Galaxy Book Câmera`, com UI nativa do GNOME;
+3. usar o `Galaxy Book Setup` para diagnóstico, reparo do stack Intel IPU6 e exposição da câmera para navegador e comunicadores.
+
+Em outras palavras: este repositório principal continua como **guia geral do notebook**, enquanto a manutenção ativa da webcam passou a viver nos três projetos dedicados acima.
+
+### Por que existe um app dedicado de câmera
+
+O app nativo de câmera do GNOME foi uma referência importante de design e de
+integração com o desktop, mas o caso do Galaxy Book4 Ultra exigiu um caminho
+mais controlado.
+
+Na prática, o problema não era só “abrir a câmera”:
+
+- o sensor `OV02C10` exigiu um driver ajustado;
+- o stack Intel IPU6 precisou ser tratado como parte da solução;
+- o caminho direto do `libcamera` precisou de tuning próprio;
+- a exposição da webcam para navegador e comunicadores precisou de bridge V4L2
+  separada em alguns cenários.
+
+Por isso a solução foi dividida em três frentes:
+
+- um repositório para o driver;
+- um app de câmera com UI nativa do GNOME para o fluxo principal de preview, foto e vídeo;
+- um assistente gráfico para instalação, reparo e compatibilidade com o
+  restante do sistema.
+
+Ou seja: o objetivo não foi abandonar o app nativo do Fedora por preferência,
+e sim criar uma solução dedicada para um hardware que, neste caso, precisava de
+mais do que o fluxo genérico do desktop.
+
+### Interfaces atuais
+
+#### Galaxy Book Câmera
+
+<table>
+  <tr>
+    <td width="132" align="center" valign="middle">
+      <img src="img/galaxybook-camera-icon.svg" alt="Ícone do Galaxy Book Câmera" width="96">
+    </td>
+    <td valign="middle">
+      <strong>Galaxy Book Câmera</strong><br>
+      App de câmera com UI nativa do GNOME para o fluxo principal de preview, foto e vídeo no Galaxy Book4 Ultra.<br>
+      Repositório: <a href="https://github.com/regiscaio/fedora-galaxy-book-camera">github.com/regiscaio/fedora-galaxy-book-camera</a>
+    </td>
+  </tr>
+</table>
+
+Tela principal:
+
+![Galaxy Book Câmera — tela principal](img/app-camera-galaxy.png)
+
+Modal `Sobre`:
+
+![Galaxy Book Câmera — Sobre](img/app-camera-galaxy-about.png)
+
+#### Galaxy Book Setup
+
+<table>
+  <tr>
+    <td width="132" align="center" valign="middle">
+      <img src="img/galaxybook-setup-icon.svg" alt="Ícone do Galaxy Book Setup" width="96">
+    </td>
+    <td valign="middle">
+      <strong>Galaxy Book Setup</strong><br>
+      Auxiliar gráfico de instalação, reparo e diagnóstico para câmera, navegador/comunicadores, NVIDIA e integrações do desktop.<br>
+      Repositório: <a href="https://github.com/regiscaio/fedora-galaxy-book-setup">github.com/regiscaio/fedora-galaxy-book-setup</a>
+    </td>
+  </tr>
+</table>
+
+Tela inicial:
+
+![Galaxy Book Setup — tela inicial](img/app-setup-galaxy.png)
+
+Tela de diagnósticos:
+
+![Galaxy Book Setup — diagnósticos](img/app-setup-galaxy-diagnostic.png)
+
+Modal `Sobre`:
+
+![Galaxy Book Setup — Sobre](img/app-setup-galaxy-about.png)
+
+---
+
 ## Incompatibilidades
 
 
 | Componente            | Status revalidado em abril de 2026 | Causa técnica resumida                                                                   |
 | ----------------------- | :---------------------: | ------------------------------------------------------------------------------------------- |
 | **Áudio interno**    | Parcial com workaround local | O bug upstream do ALSA continua relevante, mas o sistema atual já expõe `Speaker` e microfones via quirks locais do `snd-hda-intel` |
-| **Câmera interna**   |     Não funciona     | Driver IPU6 OV02C10 não aceita clock de 26 MHz, necessário para o sensor Samsung        |
+| **Câmera interna**   | Funciona com solução dedicada | Requer driver `ov02c10` ajustado, empacotamento `akmod` e app com UI nativa do GNOME mantidos em repositórios separados |
 | **Leitor de digital** |   Parcial/instável   | O `fprintd` detecta o sensor Egis, mas cadastro e comportamento pós-suspensão ainda precisam de validação contínua |
 | **NVIDIA RTX 4070**   | Funciona c/ ressalvas | Os módulos proprietários carregam, inclusive com Secure Boot ativo, mas updates e ferramentas de verificação ainda exigem atenção |
 | **BIOS/Firmware**     |    Riscos recentes    | Updates recentes causam throttling, falhas em docks e Bluetooth                           |
@@ -132,67 +243,93 @@ speaker-test -c 2 -t wav
 
 ## Câmera Interna (IPU6/OV02C10)
 
-A câmera interna **continua sem funcionar** no Galaxy Book4 Ultra com Fedora. O sensor OmniVision OV02C10 é detectado, mas o probe falha porque o driver recebe um clock externo de `26 MHz`, enquanto esse caminho do driver continua esperando a configuração usada por outros modelos Samsung com `19.2 MHz`.
+A câmera interna do Galaxy Book4 Ultra **passou a funcionar com uma solução dedicada**, composta por um driver `ov02c10` ajustado, um app de câmera com UI nativa do GNOME e um assistente gráfico de instalação e diagnóstico.
 
 > [!IMPORTANT]
-> Relatei o problema no [bugzilla.kernel.org](https://bugzilla.kernel.org/show_bug.cgi?id=220364), explicando a questão do clock e a incompatibilidade com o sensor OV02C10. Até **5 de abril de 2026**, o bug seguia **sem resposta upstream**. A solução definitiva depende de correções no driver IPU6.
+> O relato upstream no [bugzilla.kernel.org](https://bugzilla.kernel.org/show_bug.cgi?id=220364) continua relevante para explicar a falha original do sensor OmniVision OV02C10. O problema base segue sendo o clock externo de `26 MHz`, incompatível com o caminho in-tree do driver que esperava `19.2 MHz`.
 >
-> Em **5 de abril de 2026**, o erro continua reproduzível no boot:
+> Quando o sistema cai de volta no driver in-tree, o erro continua sendo este:
 >
 > ```text
 > external clock 26000000 is not supported
 > probe with driver ov02c10 failed with error -22
 > ```
 >
-> Também confirmei que o atributo `block_recording` do driver `samsung_galaxybook` estava em `0`, então a falha atual **não** parece estar relacionada ao atalho Fn+F10 ou a bloqueio lógico da webcam/microfone.
->
-> Um ponto importante é que o userspace já tem perfis e tuning para `OV02C10` em `ipu6epmtl`, então o problema continua parecendo abaixo do userspace, no nível de ACPI/software node/clock ou da combinação de drivers carregados.
+> A diferença é que agora existe um caminho funcional mantido fora deste guia principal.
 
-![alt text](img/app-camera.png)
+![Galaxy Book Câmera — fluxo principal](img/app-camera-galaxy.png)
 
-### Estado atual
+### Solução atual
 
-Se eu preciso de webcam no Fedora hoje, a solução prática continua sendo usar uma webcam USB externa.
+Os repositórios que concentram essa solução são:
+
+- [`fedora-galaxy-book-ov02c10`](https://github.com/regiscaio/fedora-galaxy-book-ov02c10)
+  mantém o módulo `ov02c10` alinhado ao stack Intel IPU6 do Fedora, o empacotamento `akmod` e o carregamento automático do driver no boot;
+- [`fedora-galaxy-book-camera`](https://github.com/regiscaio/fedora-galaxy-book-camera)
+  entrega o app de câmera com UI nativa do GNOME para uso diário;
+- [`fedora-galaxy-book-setup`](https://github.com/regiscaio/fedora-galaxy-book-setup)
+  organiza diagnósticos e ações rápidas para instalação, reparo, ajuste de prioridade do driver, restauração do stack Intel IPU6 e ativação da webcam V4L2 para navegadores e comunicadores, além de acompanhar NVIDIA, perfil `balanced` e integrações do desktop.
+
+O trabalho nesses repositórios parte dos aprendizados do fix comunitário:
+
+- <https://github.com/abdallah-alkanani/galaxybook3-ov02c10-fix/>
+
+Hoje, se eu preciso da webcam no Fedora, o caminho recomendado não é mais insistir em workarounds manuais antigos dentro deste repositório, e sim usar o driver dedicado e o app com UI nativa do GNOME mantidos nos repositórios acima.
 
 > [!NOTE]
-> Métodos que eu **não** considero mais parte da solução atual:
->
-> - `modprobe ov02c10 clock_frequency=19200000`
-> - `ov02c10-clock-fix.service`
-> - `v4l2-relayd` + `icamerasrc` como suposto workaround para a câmera interna
->
-> O antigo experimento com `modprobe ov02c10 clock_frequency=19200000` ficou obsoleto. Hoje o módulo registra:
->
-> ```text
-> ov02c10: unknown parameter 'clock_frequency' ignored
-> ```
->
-> Portanto, esse workaround não corrige mais o problema real.
+> Ao atualizar os RPMs locais do driver fora de um repositório, inclua juntos
+> `galaxybook-ov02c10-kmod-common`, `akmod-galaxybook-ov02c10` e
+> `kmod-galaxybook-ov02c10`. Um metapacote `kmod-galaxybook-ov02c10` antigo
+> pode prender a versão anterior do `akmod` e fazer o `dnf` ignorar a
+> atualização do módulo corrigido.
+
+Na prática, o `Galaxy Book Setup` passou a ser o ponto central para:
+
+- instalar o conjunto da câmera;
+- reconstruir o driver com `akmods`;
+- ajustar a prioridade do módulo corrigido quando o sistema cai no `ov02c10` in-tree;
+- validar a câmera no `libcamera`;
+- expor a câmera interna como webcam V4L2 para Meet, Teams, Discord e outros apps WebRTC;
+- acompanhar também o estado da NVIDIA, o perfil `balanced` da plataforma e extensões úteis do GNOME.
+
+### O que não faz mais sentido usar
+
+Os seguintes caminhos ficaram legados e **não** representam mais a solução atual da câmera base:
+
+- `modprobe ov02c10 clock_frequency=19200000`
+- `ov02c10-clock-fix.service`
+- usar `v4l2-relayd` + `icamerasrc` como forma de “provar” a detecção principal do sensor
+
+O antigo experimento com `clock_frequency=19200000` ficou obsoleto. O módulo atual responde:
+
+```text
+ov02c10: unknown parameter 'clock_frequency' ignored
+```
 
 ### Verificação
 
 ```bash
-v4l2-ctl --list-devices
+modinfo -n ov02c10
 journalctl -b -k | grep -i ov02c10
 cam -l
+journalctl -b -u akmods --no-pager
 ```
 
 > [!CAUTION]
-> **Erro comum**:
+> **Erro comum quando o sistema voltou ao driver in-tree**:
 > ```external clock 26000000 is not supported ``` \
 > ```probe with driver ov02c10 failed with error -22```
 >
-> O driver IPU6 não consegue inicializar o sensor OV02C10 devido à incompatibilidade de clock. Isso é esperado, pois o sensor da Samsung no Galaxy Book4 Ultra não é compatível com o clock de 19.2 MHz utilizado por outros modelos.
+> Isso indica que o módulo corrigido não foi carregado no boot e que o sistema caiu de volta na cópia in-tree do kernel.
 >
-> Além disso, em abril de 2026:
+> Nessa situação, o caminho recomendado é:
 >
-> - `libcamera` ainda não enumera nenhuma câmera utilizável;
-> - o `icamerasrc` não expõe `ov02c10-uf-*` como `device-name`;
-> - o stack de userspace acabou selecionando `AR0234_TGL_10bits.aiqb`, apesar de haver perfis `OV02C10` instalados;
-> - a webcam virtual `Intel MIPI Camera` criada por `v4l2loopback`/`v4l2-relayd` não deve ser tratada como prova de funcionamento da câmera interna;
-> - o relay padrão usa `1280x720`, enquanto o `icamerasrc` anuncia caps NV12 com altura mínima `960`, adicionando erro de negociação no userspace.
->
-> Isso indica que **não há, hoje, uma correção simples só em userspace**.
+> - abrir o `Galaxy Book Setup`;
+> - revisar o status do `akmods` e do módulo ativo;
+> - ou consultar o README do `fedora-galaxy-book-ov02c10` para o fluxo de reparo.
+
+> [!NOTE]
+> O bridge com `v4l2-relayd`, `icamerasrc` e `v4l2loopback` continua sendo válido, mas agora com outro papel: **compatibilidade com navegadores e comunicadores**. Ele não substitui a validação do `libcamera`; ele entra depois, para expor a câmera como webcam V4L2 para apps WebRTC.
 
 ---
 
@@ -302,7 +439,7 @@ nvidia-smi
 | :---------- | :------------------------------------------------------------------------------------------------------------------ |
 | **Kernel**  | `uname -r`                                                                                                          |
 | **Áudio**   | `aplay -l && wpctl status && cat /sys/module/snd_hda_intel/parameters/model && cat /sys/module/snd_hda_intel/parameters/patch` |
-| **Câmera**  | `v4l2-ctl --list-devices && journalctl -b -k \| grep -i ov02c10 && cam -l && systemctl status v4l2-relayd.service --no-pager` |
+| **Câmera**  | `modinfo -n ov02c10 && journalctl -b -k \| grep -i ov02c10 && cam -l && journalctl -b -u akmods --no-pager` |
 | **Digital** | `fprintd-list $USER && systemctl status fprintd.service --no-pager && journalctl -b \| grep -i fprint` |
 | **NVIDIA**  | `lsmod \| grep nvidia && mokutil --sb-state && rpm -qa \| grep -i nvidia` |
 
@@ -313,3 +450,4 @@ nvidia-smi
 
 - [Relato de tentativa de engenharia reversa para alto-falantes internos no EndeavourOS](https://github.com/dgunay/galaxy-book4-pro-reverse-engineering)
 - [Relato com uso do Fedora 42 (KDE) com medições de desempenho da Intel Xe Iris](https://github.com/jusqua/galaxy-book4-linux)
+- [Fix comunitário do Galaxy Book3 para o driver OV02C10 da câmera](https://github.com/abdallah-alkanani/galaxybook3-ov02c10-fix)
