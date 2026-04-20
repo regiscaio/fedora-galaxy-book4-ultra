@@ -2,11 +2,11 @@
 
 ## Instalação rápida
 
-Para instalar a linha atual da solução da câmera via repositório DNF:
+Para instalar a linha atual do suporte principal do notebook via repositório DNF:
 
 ```bash
 sudo dnf config-manager addrepo --from-repofile=https://packages.caioregis.com/fedora/caioregis.repo
-sudo dnf install galaxybook-camera galaxybook-setup akmod-galaxybook-ov02c10
+sudo dnf install galaxybook-camera galaxybook-setup akmod-galaxybook-ov02c10 akmod-galaxybook-max98390
 ```
 
 Esse fluxo instala:
@@ -14,21 +14,23 @@ Esse fluxo instala:
 - o app de câmera com UI nativa do GNOME;
 - o assistente gráfico de instalação e diagnóstico;
 - o driver `ov02c10` empacotado como `akmod`.
+- o suporte `MAX98390` empacotado como `akmod` para os alto-falantes internos.
 
 > [!IMPORTANT]
-> **Atualizado em 19 de abril de 2026**
+> **Atualizado em 20 de abril de 2026**
 >
 > Este guia reúne explicações técnicas, soluções práticas e informações úteis para usuários do Fedora no Samsung Galaxy Book4 Ultra, com foco em áudio, câmera, leitor de digital e drivers NVIDIA.
 >
 > O conteúdo histórico abaixo foi **revalidado em 5 de abril de 2026** em um **Samsung Galaxy Book4 Ultra NP960XGL-XG1BR**, rodando **Fedora 43** com kernel **6.18.8-200.fc43.x86_64**.
 >
-> A partir de **19 de abril de 2026**, a solução da câmera passou a ser mantida em repositórios dedicados, com driver, app de câmera com UI nativa do GNOME e assistente de instalação separados. Este README continua como guia geral do notebook e aponta para esses projetos quando o assunto é webcam.
+> A partir de **19 de abril de 2026**, a solução da câmera e o suporte dedicado aos alto-falantes internos passaram a ser mantidos em repositórios próprios, com driver, app de câmera com UI nativa do GNOME, assistente de instalação e driver de áudio separados. Este README continua como guia geral do notebook e aponta para esses projetos quando o assunto é webcam e áudio.
 >
-> A linha atual dos projetos dedicados foi **verificada em 19 de abril de 2026** em um **Samsung Galaxy Book4 Ultra NP960XGL-XG1BR**, rodando **Fedora 44** com kernel **6.19.10-300.fc44.x86_64**, nas seguintes versões:
+> A linha atual dos projetos dedicados foi **verificada em 20 de abril de 2026** em um **Samsung Galaxy Book4 Ultra NP960XGL-XG1BR**, rodando **Fedora 44** com kernel **6.19.10-300.fc44.x86_64**, nas seguintes versões:
 >
 > - `fedora-galaxy-book-ov02c10`: **1.0.0-1**
 > - `fedora-galaxy-book-camera`: **1.0.0**
-> - `fedora-galaxy-book-setup`: **1.0.0**
+> - `fedora-galaxy-book-setup`: **1.0.0-4**
+> - `fedora-galaxy-book-max98390`: **1.0.0-1**
 
 | Especificação       | Detalhes                                                                             |
 | ----------------------- | :------------------------------------------------------------------------------------- |
@@ -78,7 +80,7 @@ Esse fluxo instala:
 
 ## Repositórios Dedicados
 
-O trabalho deste notebook foi dividido em repositórios específicos para a câmera:
+O trabalho deste notebook foi dividido em repositórios dedicados para webcam, áudio e instalação:
 
 - [`fedora-galaxy-book-ov02c10`](https://github.com/regiscaio/fedora-galaxy-book-ov02c10)
   Driver `ov02c10` ajustado e empacotado como `akmod` para Fedora.
@@ -86,8 +88,10 @@ O trabalho deste notebook foi dividido em repositórios específicos para a câm
   App de câmera com UI nativa do GNOME em `GTK4` e `libadwaita`, usando `libcamera`.
 - [`fedora-galaxy-book-setup`](https://github.com/regiscaio/fedora-galaxy-book-setup)
   Auxiliar de instalação e diagnóstico com interface gráfica para câmera, webcam em navegadores/comunicadores, NVIDIA, perfil de uso `balanced` da plataforma e integrações do GNOME.
+- [`fedora-galaxy-book-max98390`](https://github.com/regiscaio/fedora-galaxy-book-max98390)
+  Suporte `MAX98390` empacotado como `akmod` para os amplificadores dos alto-falantes internos.
 
-Esses três projetos consolidam a solução atual da webcam no Galaxy Book4 Ultra e reduzem a necessidade de repetir scripts e workarounds soltos dentro deste guia principal.
+Esses quatro projetos consolidam a linha atual de webcam, áudio e diagnóstico no Galaxy Book4 Ultra e reduzem a necessidade de repetir scripts e workarounds soltos dentro deste guia principal.
 
 ### Resumo da solução atual da câmera
 
