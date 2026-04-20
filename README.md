@@ -28,7 +28,7 @@ Esse fluxo instala:
 > A linha atual dos projetos dedicados foi **verificada em 20 de abril de 2026** em um **Samsung Galaxy Book4 Ultra NP960XGL-XG1BR**, rodando **Fedora 44** com kernel **6.19.10-300.fc44.x86_64**, nas seguintes versões:
 >
 > - `fedora-galaxy-book-ov02c10`: **1.0.0-1**
-> - `fedora-galaxy-book-camera`: **1.0.0**
+> - `fedora-galaxy-book-camera`: **1.0.0-2**
 > - `fedora-galaxy-book-setup`: **1.0.0-4**
 > - `fedora-galaxy-book-max98390`: **1.0.0-1**
 
@@ -206,7 +206,7 @@ Modal `Sobre`:
 
 | Componente | Estado revalidado em abril de 2026 | Leitura prática atual |
 | :-- | :--: | :-- |
-| **Áudio interno** | Coberto por linha dedicada | O suporte deixou de depender apenas de notas manuais neste README e passou a ser organizado em `fedora-galaxy-book-max98390` e `fedora-galaxy-book-setup`, com foco no caminho `MAX98390` dos alto-falantes internos. |
+| **Áudio interno** | Funciona | O caminho atual dos alto-falantes internos já funciona com a linha dedicada `MAX98390`, empacotada em `fedora-galaxy-book-max98390` e integrada ao `fedora-galaxy-book-setup`. |
 | **Câmera interna** | Funciona | O stack atual já permite usar a câmera tanto no app nativo do Fedora quanto na solução dedicada, com `ov02c10` empacotado, `Galaxy Book Câmera` e `Galaxy Book Setup`. |
 | **Leitor de digital** | Parcial/instável | O `fprintd` detecta o sensor Egis, mas cadastro persistente e comportamento pós-suspensão ainda precisam de validação contínua. |
 | **NVIDIA RTX 4070** | Funciona c/ ressalvas | Os módulos proprietários carregam, inclusive com Secure Boot ativo, mas updates de kernel e ferramentas de verificação ainda exigem atenção. |
@@ -216,12 +216,12 @@ Modal `Sobre`:
 
 ## Alto-falantes Internos (Realtek ALC298)
 
-O Galaxy Book4 Ultra usa o codec **Realtek ALC298**, mas o ponto sensível dos
-alto-falantes internos não é só o codec em si: o caminho dos amplificadores
-`MAX98390` também precisa entrar na conta.
+Hoje, os **alto-falantes internos já funcionam** no Galaxy Book4 Ultra pelo
+caminho dedicado que combina o codec **Realtek ALC298** com o suporte aos
+amplificadores `MAX98390`.
 
-Por isso, o fluxo prático do áudio deixou de ser “juntar quirks locais neste
-README” e passou a ser mantido em repositórios dedicados:
+Na prática, o áudio interno deixou de depender de um conjunto de quirks soltos
+no próprio README e passou a ser mantido em repositórios dedicados:
 
 - [`fedora-galaxy-book-max98390`](https://github.com/regiscaio/fedora-galaxy-book-max98390)
   concentra o suporte empacotado em `RPM/akmod` para a trilha `MAX98390`;
@@ -229,29 +229,8 @@ README” e passou a ser mantido em repositórios dedicados:
   organiza os diagnósticos e as ações rápidas para o caminho dos alto-falantes
   internos.
 
-Em outras palavras: o áudio interno não deve mais ser tratado, neste guia
-principal, como um conjunto de comandos manuais soltos. O papel deste README
-agora é apontar o fluxo correto e preservar o contexto técnico upstream.
-
-> [!IMPORTANT]
-> Relatei no [bugzilla.kernel.org](https://bugzilla.kernel.org/show_bug.cgi?id=220363), que o kernel associa o hardware e, em logs avançados (anexo `alsa-info.log`), é possível ver o modelo do codec, mas a ausência de roteamento adequado (“speaker_outs=0”) no fixup do ALSA, impede o funcionamento do canal de alto-falantes internos. Nessa situação, apenas correções no driver/ALSA resolverá.
->
-> No próprio bug, há também uma resposta de **Zhang Heng em 23 de dezembro de 2025** dizendo que o mapeamento do speaker em `0x17` parece normal e sugerindo testar três modelos no kernel:
->
-> - `alc298-samsung-amp-v2-2-amps`
-> - `alc298-samsung-amp-v2-4-amps`
-> - `alc298-samsung-amp`
->
-> Ele também sugere comparar o dump do codec com o Windows caso nenhum deles funcione.
->
-> Em abril de 2026, esse contexto **continua útil como explicação upstream**, mas o estado prático do sistema já não é exatamente o mesmo descrito em 2025. Antes da trilha dedicada `MAX98390`, a minha configuração local chegou a depender destes dois parâmetros no `snd-hda-intel`:
->
-> - `model=alc298-samsung-amp-v2-2-amps`
-> - `patch=alc298-internal-amp.fw`
->
-> Isso é relevante porque, em **5 de abril de 2026**, eu já estava justamente usando `alc298-samsung-amp-v2-2-amps`, ou seja, uma das alternativas sugeridas no próprio bug.
->
-> Em outras palavras: o problema **não está limpo/upstream**, mas também já não é mais correto resumir o estado atual apenas como “não funciona”.
+Em outras palavras: o áudio interno já saiu do estado de “investigação local”
+e entrou num fluxo instalável e reproduzível no Fedora.
 
 ![alt text](img/settings-audio.png)
 
@@ -269,7 +248,7 @@ Depois:
 1. abra o `Galaxy Book Setup`;
 2. revise o diagnóstico `Alto-falantes internos`;
 3. execute a ação `Ativar alto-falantes internos`;
-4. só então valide a saída `Speaker` no sistema.
+4. valide a saída `Speaker` no sistema.
 
 ### Verificação
 
@@ -280,6 +259,34 @@ wpctl status
 lsmod | grep snd_hda_scodec_max98390
 speaker-test -c 2 -t wav
 ```
+
+> [!IMPORTANT]
+> O relato no [bugzilla.kernel.org](https://bugzilla.kernel.org/show_bug.cgi?id=220363)
+> continua útil como histórico técnico do problema original. Ele descreve um
+> estado em que o kernel associava o hardware, mas o roteamento dos
+> alto-falantes internos ainda não estava fechado de forma utilizável no stack
+> padrão.
+>
+> No próprio bug, há também uma resposta de **Zhang Heng em 23 de dezembro de 2025** dizendo que o mapeamento do speaker em `0x17` parece normal e sugerindo testar três modelos no kernel:
+>
+> - `alc298-samsung-amp-v2-2-amps`
+> - `alc298-samsung-amp-v2-4-amps`
+> - `alc298-samsung-amp`
+>
+> Ele também sugere comparar o dump do codec com o Windows caso nenhum deles funcione.
+> Em abril de 2026, esse contexto **continua útil como explicação upstream**,
+> mas já não descreve o estado atual do notebook com a linha dedicada
+> `MAX98390`. Antes dela, a minha configuração local chegou a depender destes
+> dois parâmetros no `snd-hda-intel`:
+>
+> - `model=alc298-samsung-amp-v2-2-amps`
+> - `patch=alc298-internal-amp.fw`
+>
+> Isso é relevante porque, em **5 de abril de 2026**, eu já estava justamente usando `alc298-samsung-amp-v2-2-amps`, ou seja, uma das alternativas sugeridas no próprio bug.
+>
+> Em outras palavras: o problema ainda não pode ser tratado como “resolvido no
+> upstream puro”, mas também já não é correto descrever o notebook como se o
+> áudio interno simplesmente não funcionasse.
 
 > [!CAUTION]
 > Métodos que eu **não** considero mais parte do fluxo principal:
