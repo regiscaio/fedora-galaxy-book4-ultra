@@ -68,7 +68,7 @@ Esse fluxo instala:
 - [Fedora no Samsung Galaxy Book4 Ultra](#fedora-no-samsung-galaxy-book4-ultra)
   - [Índice](#índice)
   - [Repositórios Dedicados](#repositórios-dedicados)
-  - [Incompatibilidades](#incompatibilidades)
+  - [Estado Atual](#estado-atual)
   - [Alto-falantes Internos (Realtek ALC298)](#alto-falantes-internos-realtek-alc298)
   - [Câmera Interna (IPU6/OV02C10)](#câmera-interna-ipu6ov02c10)
   - [Leitor de Digital (Fingerprint)](#leitor-de-digital-fingerprint)
@@ -201,22 +201,37 @@ Modal `Sobre`:
 
 ---
 
-## Incompatibilidades
+## Estado Atual
 
 
-| Componente            | Status revalidado em abril de 2026 | Causa técnica resumida                                                                   |
-| ----------------------- | :---------------------: | ------------------------------------------------------------------------------------------- |
-| **Áudio interno**    | Parcial com workaround local | O bug upstream do ALSA continua relevante, mas o sistema atual já expõe `Speaker` e microfones via quirks locais do `snd-hda-intel` |
-| **Câmera interna**   | Funciona com solução dedicada | Requer driver `ov02c10` ajustado, empacotamento `akmod` e app com UI nativa do GNOME mantidos em repositórios separados |
-| **Leitor de digital** |   Parcial/instável   | O `fprintd` detecta o sensor Egis, mas cadastro e comportamento pós-suspensão ainda precisam de validação contínua |
-| **NVIDIA RTX 4070**   | Funciona c/ ressalvas | Os módulos proprietários carregam, inclusive com Secure Boot ativo, mas updates e ferramentas de verificação ainda exigem atenção |
-| **BIOS/Firmware**     |    Riscos recentes    | Updates recentes causam throttling, falhas em docks e Bluetooth                           |
+| Componente | Estado revalidado em abril de 2026 | Leitura prática atual |
+| :-- | :--: | :-- |
+| **Áudio interno** | Coberto por linha dedicada | O suporte deixou de depender apenas de notas manuais neste README e passou a ser organizado em `fedora-galaxy-book-max98390` e `fedora-galaxy-book-setup`, com foco no caminho `MAX98390` dos alto-falantes internos. |
+| **Câmera interna** | Funciona | O stack atual já permite usar a câmera tanto no app nativo do Fedora quanto na solução dedicada, com `ov02c10` empacotado, `Galaxy Book Câmera` e `Galaxy Book Setup`. |
+| **Leitor de digital** | Parcial/instável | O `fprintd` detecta o sensor Egis, mas cadastro persistente e comportamento pós-suspensão ainda precisam de validação contínua. |
+| **NVIDIA RTX 4070** | Funciona c/ ressalvas | Os módulos proprietários carregam, inclusive com Secure Boot ativo, mas updates de kernel e ferramentas de verificação ainda exigem atenção. |
+| **BIOS/Firmware** | Riscos recentes | Updates recentes continuam associados a throttling, falhas em docks e regressões de Bluetooth. |
 
 ---
 
 ## Alto-falantes Internos (Realtek ALC298)
 
-O Galaxy Book4 Ultra usa o codec **Realtek ALC298**. No estado atual do meu notebook, o Linux já expõe `Speaker`, `Stereo Microphone` e `Digital Microphone`. O áudio interno deixou de ser um caso de “não funciona” e passou a ser um caso de **funciona com quirk local, mas ainda não está resolvido upstream**.
+O Galaxy Book4 Ultra usa o codec **Realtek ALC298**, mas o ponto sensível dos
+alto-falantes internos não é só o codec em si: o caminho dos amplificadores
+`MAX98390` também precisa entrar na conta.
+
+Por isso, o fluxo prático do áudio deixou de ser “juntar quirks locais neste
+README” e passou a ser mantido em repositórios dedicados:
+
+- [`fedora-galaxy-book-max98390`](https://github.com/regiscaio/fedora-galaxy-book-max98390)
+  concentra o suporte empacotado em `RPM/akmod` para a trilha `MAX98390`;
+- [`fedora-galaxy-book-setup`](https://github.com/regiscaio/fedora-galaxy-book-setup)
+  organiza os diagnósticos e as ações rápidas para o caminho dos alto-falantes
+  internos.
+
+Em outras palavras: o áudio interno não deve mais ser tratado, neste guia
+principal, como um conjunto de comandos manuais soltos. O papel deste README
+agora é apontar o fluxo correto e preservar o contexto técnico upstream.
 
 > [!IMPORTANT]
 > Relatei no [bugzilla.kernel.org](https://bugzilla.kernel.org/show_bug.cgi?id=220363), que o kernel associa o hardware e, em logs avançados (anexo `alsa-info.log`), é possível ver o modelo do codec, mas a ausência de roteamento adequado (“speaker_outs=0”) no fixup do ALSA, impede o funcionamento do canal de alto-falantes internos. Nessa situação, apenas correções no driver/ALSA resolverá.
@@ -229,7 +244,7 @@ O Galaxy Book4 Ultra usa o codec **Realtek ALC298**. No estado atual do meu note
 >
 > Ele também sugere comparar o dump do codec com o Windows caso nenhum deles funcione.
 >
-> Em abril de 2026, esse contexto **continua útil como explicação upstream**, mas o estado prático do sistema já não é exatamente o mesmo descrito em 2025. Hoje, minha configuração funcional depende destes dois parâmetros no `snd-hda-intel`:
+> Em abril de 2026, esse contexto **continua útil como explicação upstream**, mas o estado prático do sistema já não é exatamente o mesmo descrito em 2025. Antes da trilha dedicada `MAX98390`, a minha configuração local chegou a depender destes dois parâmetros no `snd-hda-intel`:
 >
 > - `model=alc298-samsung-amp-v2-2-amps`
 > - `patch=alc298-internal-amp.fw`
@@ -240,35 +255,49 @@ O Galaxy Book4 Ultra usa o codec **Realtek ALC298**. No estado atual do meu note
 
 ![alt text](img/settings-audio.png)
 
-### Configuração atual do áudio
+### Fluxo recomendado
 
-Hoje, o que faz sentido manter é a configuração do próprio driver:
+Hoje, o caminho que faz sentido para o áudio é:
 
 ```bash
-sudo tee /etc/modprobe.d/alc298.conf <<< 'options snd-hda-intel patch=alc298-internal-amp.fw'
-sudo tee /etc/modprobe.d/audio-fix.conf <<< 'options snd-hda-intel model=alc298-samsung-amp-v2-2-amps'
-sudo reboot
+sudo dnf config-manager addrepo --from-repofile=https://packages.caioregis.com/fedora/caioregis.repo
+sudo dnf install galaxybook-setup akmod-galaxybook-max98390
 ```
+
+Depois:
+
+1. abra o `Galaxy Book Setup`;
+2. revise o diagnóstico `Alto-falantes internos`;
+3. execute a ação `Ativar alto-falantes internos`;
+4. só então valide a saída `Speaker` no sistema.
 
 ### Verificação
 
 ```bash
+modinfo -n snd-hda-scodec-max98390
+modinfo -n snd-hda-scodec-max98390-i2c
 wpctl status
-cat /sys/module/snd_hda_intel/parameters/model
-cat /sys/module/snd_hda_intel/parameters/patch
+lsmod | grep snd_hda_scodec_max98390
 speaker-test -c 2 -t wav
 ```
 
 > [!CAUTION]
-> Métodos que eu **não** considero mais parte da solução atual:
+> Métodos que eu **não** considero mais parte do fluxo principal:
 >
 > - `speaker-init.service`
 > - `samsung-audio-fix.service`
 > - scripts de inicialização com `hda-verb`
+> - concentrar o troubleshooting de áudio apenas em quirks locais de `snd-hda-intel` dentro deste README
 >
 > Esses caminhos ficaram legados no meu setup. Em abril de 2026, os services antigos de áudio estavam falhando no boot e já não definiam mais o comportamento real do sistema.
 >
-> Se esse quirk parar de funcionar, os próximos testes coerentes continuam sendo:
+> O contexto de `ALC298` continua importante para upstream e para comparação de
+> comportamento com o Windows, mas o caminho prático do usuário final agora
+> deve passar pelo repositório dedicado `MAX98390` e pelo `Galaxy Book Setup`.
+
+> [!NOTE]
+> Se for necessário testar o lado mais histórico do codec, os modelos abaixo
+> continuam sendo as variações mais coerentes para comparação:
 >
 > - `alc298-samsung-amp-v2-4-amps`
 > - `alc298-samsung-amp`
@@ -326,6 +355,23 @@ Na prática, o `Galaxy Book Setup` passou a ser o ponto central para:
 - validar a câmera no `libcamera`;
 - expor a câmera interna como webcam V4L2 para Meet, Teams, Discord e outros apps WebRTC;
 - acompanhar também o estado da NVIDIA, o perfil `balanced` da plataforma e extensões úteis do GNOME.
+
+Hoje, vale deixar explícito um ponto que já mudou em relação às primeiras
+iterações dessa investigação: o **app nativo de câmera do Fedora/GNOME já pode
+funcionar** neste notebook no estado atual do stack.
+
+Isso, porém, não faz o `Galaxy Book Câmera` perder sentido. Os dois caminhos
+entregam experiências diferentes:
+
+- o app nativo do Fedora tende a mostrar uma imagem mais processada, com cor e
+  balanço de branco mais agradáveis logo no padrão;
+- o `Galaxy Book Câmera` usa um caminho direto via `libcamera`, visualmente
+  mais cru e mais próximo do sensor, preservando mais detalhe fino e oferecendo
+  controle muito mais flexível sobre a imagem.
+
+Em outras palavras: hoje o stack da câmera já permite compatibilidade melhor com
+o desktop, mas o app dedicado continua sendo a melhor opção quando a prioridade
+é detalhe, tuning do sensor e controle de imagem.
 
 ### O que não faz mais sentido usar
 
