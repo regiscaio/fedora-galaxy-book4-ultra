@@ -128,6 +128,25 @@ Ou seja: o objetivo não foi abandonar o app nativo do Fedora por preferência,
 e sim criar uma solução dedicada para um hardware que, neste caso, precisava de
 mais do que o fluxo genérico do desktop.
 
+Hoje, o app nativo de câmera do Fedora/GNOME já pode funcionar neste notebook,
+o que é um sinal claro de que o stack geral do sistema ficou mais saudável. Isso
+não quer dizer, porém, que ele entregue a mesma experiência do `Galaxy Book
+Câmera`.
+
+Na prática, a diferença visual atual é esta:
+
+- o app nativo do Fedora tende a mostrar uma imagem mais processada, com cor e
+  balanço de branco mais agradáveis logo no padrão;
+- o `Galaxy Book Câmera` usa um caminho direto via `libcamera`, visualmente
+  mais cru e mais próximo do sensor, preservando mais detalhe fino e oferecendo
+  muito mais controle sobre a imagem.
+
+Em outras palavras: hoje os dois caminhos podem funcionar, mas eles servem a
+prioridades diferentes. O app nativo do Fedora já é um bom sinal de
+compatibilidade do sistema, enquanto o `Galaxy Book Câmera` continua sendo a
+melhor opção quando a prioridade é detalhe, tuning do sensor e flexibilidade de
+ajuste.
+
 ### Interfaces atuais
 
 #### Galaxy Book Câmera
