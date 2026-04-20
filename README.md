@@ -1,5 +1,20 @@
 # Fedora no Samsung Galaxy Book4 Ultra
 
+## Instalação rápida
+
+Para instalar a linha atual da solução da câmera via repositório DNF:
+
+```bash
+sudo dnf config-manager addrepo --from-repofile=https://packages.caioregis.com/fedora/caioregis.repo
+sudo dnf install galaxybook-camera galaxybook-setup akmod-galaxybook-ov02c10
+```
+
+Esse fluxo instala:
+
+- o app de câmera com UI nativa do GNOME;
+- o assistente gráfico de instalação e diagnóstico;
+- o driver `ov02c10` empacotado como `akmod`.
+
 > [!IMPORTANT]
 > **Atualizado em 19 de abril de 2026**
 >
@@ -14,7 +29,6 @@
 > - `fedora-galaxy-book-ov02c10`: **1.0.0-1**
 > - `fedora-galaxy-book-camera`: **1.0.0**
 > - `fedora-galaxy-book-setup`: **1.0.0**
-
 
 | Especificação       | Detalhes                                                                             |
 | ----------------------- | :------------------------------------------------------------------------------------- |
@@ -42,8 +56,6 @@
 
 > [!TIP]
 > **Kernel recomendado:** Utilize o kernel **6.15 ou superior** para garantir o reconhecimento adequado do hardware do Galaxy Book4 Ultra. Versões anteriores apresentam limitações significativas de compatibilidade.
->
-> Ferramentas como o [samsung-galaxybook-extras](https://github.com/joshuagrisham/samsung-galaxybook-extras) podem facilitar a configuração inicial e aplicar ajustes específicos para este modelo.
 >
 > Caso você não seja um usuário avançado, recomendo que use o Windows 11, que já vem instalado de fábrica e funciona perfeitamente neste modelo.
 
@@ -335,13 +347,22 @@ journalctl -b -u akmods --no-pager
 
 ## Leitor de Digital (Fingerprint)
 
-O sensor é detectado via `fprintd`, mas pode falhar após suspensão ou não aceitar cadastro.
+O leitor de digital deste notebook é um **Egis / LighTuning ETU905A80-E** (`1c7a:05a1`).
 
-Em abril de 2026, o dispositivo apareceu como **Egis Technology (LighTuning) Match-on-Chip** e o daemon `fprintd` subiu normalmente. O ponto que ainda falta validar é o uso diário, porque eu não tinha digitais cadastradas no momento dessa revisão.
+Em **20 de abril de 2026**, o cenário local ficou assim:
+
+- o sensor apareceu no `lsusb` como `1c7a:05a1 LighTuning Technology Inc. ETU905A80-E`;
+- o `fprintd` subiu normalmente;
+- o perfil `authselect` já estava com `with-fingerprint` habilitado;
+- o `libfprint` instalado era o `1.94.10`, que já inclui o driver `egismoc` usado por esse sensor.
+
+Ou seja: neste ponto, o leitor **não está no cenário de hardware sem suporte**. O que ainda faltava validar era o uso diário com digitais realmente cadastradas, além do comportamento após suspensão.
 
 ![alt text](img/settings-fingerprint.png)
 
-### Solução parcial: reinstalar `fprintd` e `libfprint`, reconfigurar o sensor.
+### Fluxo recomendado
+
+Se o sensor aparecer, mas o cadastro ou a autenticação falharem, o caminho mais seguro continua sendo reinstalar o stack e refazer o cadastro:
 
 ```bash
 sudo dnf reinstall fprintd libfprint
@@ -355,6 +376,9 @@ sudo authselect apply-changes
 ### Verificação
 
 ```bash
+lsusb | grep -i '1c7a:05a1'
+fprintd-list $USER
+authselect current
 fprintd-verify
 ```
 
