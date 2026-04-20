@@ -1,3 +1,10 @@
+<p>
+  <a href="README.md">🇧🇷 Português</a>
+  <a href="README.en.md">🇺🇸 English</a>
+  <a href="README.es.md">🇪🇸 Español</a>
+  <a href="README.it.md">🇮🇹 Italiano</a>
+</p>
+
 # Fedora no Samsung Galaxy Book4 Ultra
 
 ## Instalação rápida
@@ -32,26 +39,26 @@ Esse fluxo instala:
 > - `fedora-galaxy-book-setup`: **1.0.0-4**
 > - `fedora-galaxy-book-max98390`: **1.0.0-1**
 
-| Especificação       | Detalhes                                                                             |
-| ----------------------- | :------------------------------------------------------------------------------------- |
-| **Modelo**            | Samsung Galaxy Book4 Ultra (NP960XGL, NP960XGL-XG1BR, NP960XGLZ-EXP...)              |
-| **Tela**              | 16" WQXGA+ (2880 x 1800) AMOLED Touchscreen                                          |
+| Especificação         | Detalhes                                                                            |
+| --------------------- | :---------------------------------------------------------------------------------- |
+| **Modelo**            | Samsung Galaxy Book4 Ultra (NP960XGL, NP960XGL-XG1BR, NP960XGLZ-EXP...)             |
+| **Tela**              | 16" WQXGA+ (2880 x 1800) AMOLED Touchscreen                                         |
 | **Processador**       | Intel Core Ultra 9 185H (Meteor Lake, 16C/22T, até 5.1 GHz, 24 MB cache)            |
-| **GPU**               | NVIDIA GeForce RTX 4070 Laptop 8 GB GDDR6                                            |
-| **Memória RAM**      | 32 GB LPDDR5X (soldada, não expansível)                                            |
-| **Armazenamento**     | 1 TB SSD NVMe PCIe Gen4 (expansível via slot M.2 secundário, dependendo do modelo) |
-| **Bateria**           | 76 Wh (integrada, íon-lítio)                                                       |
-| **Carregador**        | 140 W USB-C (20V, 5A ou 28V, 5A)                                                     |
+| **GPU**               | NVIDIA GeForce RTX 4070 Laptop 8 GB GDDR6                                           |
+| **Memória RAM**       | 32 GB LPDDR5X (soldada, não expansível)                                             |
+| **Armazenamento**     | 1 TB SSD NVMe PCIe Gen4 (expansível via slot M.2 secundário, dependendo do modelo)  |
+| **Bateria**           | 76 Wh (integrada, íon-lítio)                                                        |
+| **Carregador**        | 140 W USB-C (20V, 5A ou 28V, 5A)                                                    |
 | **Portas**            | 2x Thunderbolt 4 (USB-C), 1x HDMI 2.1, 1x USB-A 3.2, 1x P2 (áudio), 1x MicroSD      |
-| **Rede sem fio**      | Wi-Fi 6E (802.11ax), Bluetooth 5.3                                                   |
-| **Webcam**            | 1080p FHD, sensor OmniVision OV02C10, IPU6 (MIPI)                                    |
-| **Áudio**            | 2x Alto-falantes estéreo (AKG), microfone duplo, codec Realtek ALC298               |
-| **Teclado**           | Teclado retroiluminado, layout ABNT2 (BR) ou US, sensor de digital integrado         |
+| **Rede sem fio**      | Wi-Fi 6E (802.11ax), Bluetooth 5.3                                                  |
+| **Webcam**            | 1080p FHD, sensor OmniVision OV02C10, IPU6 (MIPI)                                   |
+| **Áudio**             | 2x Alto-falantes estéreo (AKG), microfone duplo, codec Realtek ALC298               |
+| **Teclado**           | Teclado retroiluminado, layout ABNT2 (BR) ou US, sensor de digital integrado        |
 | **Touchpad**          | Amplo, compatível com gestos Windows Precision                                      |
-| **Leitor de Digital** | Integrado ao botão power, compatível com Windows Hello                             |
-| **Dimensões**        | 355,4 x 250,4 x 16,5 mm                                                              |
-| **Outros**            | Sensor de luz ambiente, suporte a Samsung Multi Control, Second Screen, Quick Share  |
-| **Certificações**   | ENERGY STAR, RoHS, FCC, CE                                                           |
+| **Leitor de Digital** | Integrado ao botão power, compatível com Windows Hello                              |
+| **Dimensões**         | 355,4 x 250,4 x 16,5 mm                                                             |
+| **Outros**            | Sensor de luz ambiente, suporte a Samsung Multi Control, Second Screen, Quick Share |
+| **Certificações**     | ENERGY STAR, RoHS, FCC, CE                                                          |
 
 * [Manual do Usuário](https://downloadcenter.samsung.com/content/UM/202506/20250618100447559/94xXGK_96xXGK_96xXGL_Win11_UM_ENG_Rev.2.0_250602.pdf)
 * [Especificações](https://www.samsung.com/br/support/model/NP960XGL-XG1BR/)
@@ -66,13 +73,28 @@ Esse fluxo instala:
 ## Índice
 
 - [Fedora no Samsung Galaxy Book4 Ultra](#fedora-no-samsung-galaxy-book4-ultra)
+  - [Instalação rápida](#instalação-rápida)
   - [Índice](#índice)
   - [Repositórios Dedicados](#repositórios-dedicados)
+    - [Resumo da solução atual da câmera](#resumo-da-solução-atual-da-câmera)
+    - [Por que existe um app dedicado de câmera](#por-que-existe-um-app-dedicado-de-câmera)
+    - [Interfaces atuais](#interfaces-atuais)
+      - [Galaxy Book Câmera](#galaxy-book-câmera)
+      - [Galaxy Book Setup](#galaxy-book-setup)
   - [Estado Atual](#estado-atual)
   - [Alto-falantes Internos (Realtek ALC298)](#alto-falantes-internos-realtek-alc298)
+    - [Fluxo recomendado](#fluxo-recomendado)
+    - [Verificação](#verificação)
   - [Câmera Interna (IPU6/OV02C10)](#câmera-interna-ipu6ov02c10)
+    - [Solução atual](#solução-atual)
+    - [O que não faz mais sentido usar](#o-que-não-faz-mais-sentido-usar)
+    - [Verificação](#verificação-1)
   - [Leitor de Digital (Fingerprint)](#leitor-de-digital-fingerprint)
+    - [Fluxo recomendado](#fluxo-recomendado-1)
+    - [Verificação](#verificação-2)
   - [Chip de Gráficos dedicados (NVIDIA RTX 4070)](#chip-de-gráficos-dedicados-nvidia-rtx-4070)
+    - [Solução: Instalação do driver NVIDIA](#solução-instalação-do-driver-nvidia)
+    - [Verificação](#verificação-3)
   - [Diagnósticos Rápidos](#diagnósticos-rápidos)
   - [Outros Relatos](#outros-relatos)
 
@@ -204,13 +226,13 @@ Modal `Sobre`:
 ## Estado Atual
 
 
-| Componente | Estado revalidado em abril de 2026 | Leitura prática atual |
-| :-- | :--: | :-- |
-| **Áudio interno** | Funciona | O caminho atual dos alto-falantes internos já funciona com a linha dedicada `MAX98390`, empacotada em `fedora-galaxy-book-max98390` e integrada ao `fedora-galaxy-book-setup`. |
-| **Câmera interna** | Funciona | O stack atual já permite usar a câmera tanto no app nativo do Fedora quanto na solução dedicada, com `ov02c10` empacotado, `Galaxy Book Câmera` e `Galaxy Book Setup`. |
-| **Leitor de digital** | Parcial/instável | O `fprintd` detecta o sensor Egis, mas cadastro persistente e comportamento pós-suspensão ainda precisam de validação contínua. |
-| **NVIDIA RTX 4070** | Funciona c/ ressalvas | Os módulos proprietários carregam, inclusive com Secure Boot ativo, mas updates de kernel e ferramentas de verificação ainda exigem atenção. |
-| **BIOS/Firmware** | Riscos recentes | Updates recentes continuam associados a throttling, falhas em docks e regressões de Bluetooth. |
+| Componente            | Estado revalidado em abril de 2026 | Leitura prática atual                                                                                                                                                          |
+| :-------------------- | :--------------------------------: | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Áudio interno**     |              Funciona              | O caminho atual dos alto-falantes internos já funciona com a linha dedicada `MAX98390`, empacotada em `fedora-galaxy-book-max98390` e integrada ao `fedora-galaxy-book-setup`. |
+| **Câmera interna**    |              Funciona              | O stack atual já permite usar a câmera tanto no app nativo do Fedora quanto na solução dedicada, com `ov02c10` empacotado, `Galaxy Book Câmera` e `Galaxy Book Setup`.         |
+| **Leitor de digital** |          Parcial/instável          | O `fprintd` detecta o sensor Egis, mas cadastro persistente e comportamento pós-suspensão ainda precisam de validação contínua.                                                |
+| **NVIDIA RTX 4070**   |       Funciona c/ ressalvas        | Os módulos proprietários carregam, inclusive com Secure Boot ativo, mas updates de kernel e ferramentas de verificação ainda exigem atenção.                                   |
+| **BIOS/Firmware**     |          Riscos recentes           | Updates recentes continuam associados a throttling, falhas em docks e regressões de Bluetooth.                                                                                 |
 
 ---
 
@@ -535,13 +557,13 @@ nvidia-smi
 
 ## Diagnósticos Rápidos
 
-| Componente  | Comando de Diagnóstico                                                                                              |
-| :---------- | :------------------------------------------------------------------------------------------------------------------ |
-| **Kernel**  | `uname -r`                                                                                                          |
+| Componente  | Comando de Diagnóstico                                                                                                         |
+| :---------- | :----------------------------------------------------------------------------------------------------------------------------- |
+| **Kernel**  | `uname -r`                                                                                                                     |
 | **Áudio**   | `aplay -l && wpctl status && cat /sys/module/snd_hda_intel/parameters/model && cat /sys/module/snd_hda_intel/parameters/patch` |
-| **Câmera**  | `modinfo -n ov02c10 && journalctl -b -k \| grep -i ov02c10 && cam -l && journalctl -b -u akmods --no-pager` |
-| **Digital** | `fprintd-list $USER && systemctl status fprintd.service --no-pager && journalctl -b \| grep -i fprint` |
-| **NVIDIA**  | `lsmod \| grep nvidia && mokutil --sb-state && rpm -qa \| grep -i nvidia` |
+| **Câmera**  | `modinfo -n ov02c10 && journalctl -b -k \| grep -i ov02c10 && cam -l && journalctl -b -u akmods --no-pager`                    |
+| **Digital** | `fprintd-list $USER && systemctl status fprintd.service --no-pager && journalctl -b \| grep -i fprint`                         |
+| **NVIDIA**  | `lsmod \| grep nvidia && mokutil --sb-state && rpm -qa \| grep -i nvidia`                                                      |
 
 ## Outros Relatos
 
