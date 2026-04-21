@@ -238,7 +238,7 @@ Modal `Sobre`:
     </td>
     <td valign="middle">
       <strong>Galaxy Book Sound</strong><br>
-      Painel nativo de som para o Galaxy Book4 Ultra, com perfis prontos, equalizador de 10 bandas e modo <code>Atmos compatível</code> aplicados diretamente via <code>PipeWire</code> e <code>WirePlumber</code>.<br>
+      App nativo de som para o Galaxy Book4 Ultra, com UI do GNOME para aplicar perfis base, ajustar o equalizador de 10 bandas e ativar o modo <code>Atmos compatível</code> no uso diário do notebook.<br>
       Repositório: <a href="https://github.com/regiscaio/fedora-galaxy-book-sound">github.com/regiscaio/fedora-galaxy-book-sound</a>
     </td>
   </tr>
@@ -249,8 +249,11 @@ curta, foco no ajuste diário do notebook e um modal `Sobre` com linguagem mais
 direta e amigável, sem cair em descrição excessivamente técnica logo na
 primeira leitura.
 
+Por baixo, o backend continua sendo próprio, mantido com `PipeWire` e
+`WirePlumber`, mas esse detalhe fica em segundo plano na apresentação do app.
+
 Neste repositório principal eu não mantenho screenshots locais do app de som.
-O preview visual e a evolução da interface ficam no repositório dedicado.
+O preview visual e a evolução da interface continuam no repositório dedicado.
 
 ---
 

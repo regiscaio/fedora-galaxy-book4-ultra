@@ -229,17 +229,31 @@ Modal `Sobre`:
 
 #### Galaxy Book Sound
 
-`Galaxy Book Sound` es el panel nativo de sonido del portátil. Centraliza el
-ecualizador de 10 bandas, los perfiles base y el interruptor de `Atmos
-compatible`, aplicados mediante su propio `filter-chain` sobre `PipeWire` y
-`WirePlumber`.
+<table>
+  <tr>
+    <td width="132" align="center" valign="middle">
+      <img src="img/galaxybook-sound-icon.svg" alt="Ícono de Galaxy Book Sound" width="96">
+    </td>
+    <td valign="middle">
+      <strong>Galaxy Book Sound</strong><br>
+      App nativa de sonido para el Galaxy Book4 Ultra, con UI de GNOME para aplicar perfiles base, ajustar el ecualizador de 10 bandas y activar el modo <code>Atmos compatible</code> en el uso diario del portátil.<br>
+      Repositorio: <a href="https://github.com/regiscaio/fedora-galaxy-book-sound">github.com/regiscaio/fedora-galaxy-book-sound</a>
+    </td>
+  </tr>
+</table>
 
-Repositorio:
-<https://github.com/regiscaio/fedora-galaxy-book-sound>
+La app sigue la misma línea de los otros componentes dedicados del stack:
+interfaz corta, foco en el ajuste diario del portátil y un modal `Acerca de`
+con lenguaje más directo y amigable, sin caer en una descripción demasiado
+técnica en la primera lectura.
+
+Por debajo, el backend sigue siendo propio y está mantenido con `PipeWire` y
+`WirePlumber`, pero ese detalle queda en segundo plano en la presentación de
+la app.
 
 Este repositorio principal no mantiene capturas locales de la app de sonido.
-La vista previa visual y la evolución de la interfaz quedan en el repositorio
-dedicado.
+La vista previa visual y la evolución de la interfaz continúan en el
+repositorio dedicado.
 
 ---
 
