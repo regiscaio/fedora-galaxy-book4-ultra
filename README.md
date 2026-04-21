@@ -13,31 +13,33 @@ Para instalar a linha atual do suporte principal do notebook via repositório DN
 
 ```bash
 sudo dnf config-manager addrepo --from-repofile=https://packages.caioregis.com/fedora/caioregis.repo
-sudo dnf install galaxybook-camera galaxybook-setup akmod-galaxybook-ov02c10 akmod-galaxybook-max98390
+sudo dnf install galaxybook-camera galaxybook-setup galaxybook-sound akmod-galaxybook-ov02c10 akmod-galaxybook-max98390
 ```
 
 Esse fluxo instala:
 
 - o app de câmera com UI nativa do GNOME;
 - o assistente gráfico de instalação e diagnóstico;
-- o driver `ov02c10` empacotado como `akmod`.
+- o app de som com equalizador, perfis e `Atmos compatível` via PipeWire;
+- o driver `ov02c10` empacotado como `akmod`;
 - o suporte `MAX98390` empacotado como `akmod` para os alto-falantes internos.
 
 > [!IMPORTANT]
-> **Atualizado em 20 de abril de 2026**
+> **Atualizado em 21 de abril de 2026**
 >
 > Este guia reúne explicações técnicas, soluções práticas e informações úteis para usuários do Fedora no Samsung Galaxy Book4 Ultra, com foco em áudio, câmera, leitor de digital e drivers NVIDIA.
 >
 > O conteúdo histórico abaixo foi **revalidado em 5 de abril de 2026** em um **Samsung Galaxy Book4 Ultra NP960XGL-XG1BR**, rodando **Fedora 43** com kernel **6.18.8-200.fc43.x86_64**.
 >
-> A partir de **19 de abril de 2026**, a solução da câmera e o suporte dedicado aos alto-falantes internos passaram a ser mantidos em repositórios próprios, com driver, app de câmera com UI nativa do GNOME, assistente de instalação e driver de áudio separados. Este README continua como guia geral do notebook e aponta para esses projetos quando o assunto é webcam e áudio.
+> A partir de **19 de abril de 2026**, a solução da câmera e o suporte dedicado aos alto-falantes internos passaram a ser mantidos em repositórios próprios, com driver, app de câmera com UI nativa do GNOME, assistente de instalação, app de som e driver de áudio separados. Este README continua como guia geral do notebook e aponta para esses projetos quando o assunto é webcam e áudio.
 >
-> A linha atual dos projetos dedicados foi **verificada em 20 de abril de 2026** em um **Samsung Galaxy Book4 Ultra NP960XGL-XG1BR**, rodando **Fedora 44** com kernel **6.19.10-300.fc44.x86_64**, nas seguintes versões:
+> Nesta revisão de **21 de abril de 2026**, a linha atual dos projetos dedicados está documentada nas seguintes versões de pacote:
 >
 > - `fedora-galaxy-book-ov02c10`: **1.0.0-1**
 > - `fedora-galaxy-book-camera`: **1.0.0-1**
 > - `fedora-galaxy-book-setup`: **1.0.0-1**
 > - `fedora-galaxy-book-max98390`: **1.0.0-1**
+> - `fedora-galaxy-book-sound`: **1.0.0-1**
 
 | Especificação         | Detalhes                                                                            |
 | --------------------- | :---------------------------------------------------------------------------------- |
@@ -81,6 +83,7 @@ Esse fluxo instala:
     - [Interfaces atuais](#interfaces-atuais)
       - [Galaxy Book Câmera](#galaxy-book-câmera)
       - [Galaxy Book Setup](#galaxy-book-setup)
+      - [Galaxy Book Sound](#galaxy-book-sound)
   - [Estado Atual](#estado-atual)
   - [Alto-falantes Internos (Realtek ALC298)](#alto-falantes-internos-realtek-alc298)
     - [Fluxo recomendado](#fluxo-recomendado)
@@ -102,7 +105,8 @@ Esse fluxo instala:
 
 ## Repositórios Dedicados
 
-O trabalho deste notebook foi dividido em repositórios dedicados para webcam, áudio e instalação:
+O trabalho deste notebook foi dividido em repositórios dedicados para webcam,
+áudio, ajuste fino de som e instalação:
 
 - [`fedora-galaxy-book-ov02c10`](https://github.com/regiscaio/fedora-galaxy-book-ov02c10)
   Driver `ov02c10` ajustado e empacotado como `akmod` para Fedora.
@@ -112,8 +116,12 @@ O trabalho deste notebook foi dividido em repositórios dedicados para webcam, �
   Auxiliar de instalação e diagnóstico com interface gráfica para câmera, webcam em navegadores/comunicadores, NVIDIA, perfil de uso `balanced` da plataforma e integrações do GNOME.
 - [`fedora-galaxy-book-max98390`](https://github.com/regiscaio/fedora-galaxy-book-max98390)
   Suporte `MAX98390` empacotado como `akmod` para os amplificadores dos alto-falantes internos.
+- [`fedora-galaxy-book-sound`](https://github.com/regiscaio/fedora-galaxy-book-sound)
+  App nativo de som em `GTK4` e `libadwaita` para equalizador, perfis e `Atmos compatível`, com backend próprio em `PipeWire`.
 
-Esses quatro projetos consolidam a linha atual de webcam, áudio e diagnóstico no Galaxy Book4 Ultra e reduzem a necessidade de repetir scripts e workarounds soltos dentro deste guia principal.
+Esses cinco projetos consolidam a linha atual de webcam, áudio e diagnóstico no
+Galaxy Book4 Ultra e reduzem a necessidade de repetir scripts e workarounds
+soltos dentro deste guia principal.
 
 ### Resumo da solução atual da câmera
 
@@ -221,6 +229,18 @@ Modal `Sobre`:
 
 ![Galaxy Book Setup — Sobre](img/app-setup-galaxy-about.png)
 
+#### Galaxy Book Sound
+
+`Galaxy Book Sound` é o painel nativo de som do notebook. Ele concentra o
+equalizador de 10 bandas, os perfis base e o toggle de `Atmos compatível`,
+aplicados por um `filter-chain` próprio em `PipeWire` e `WirePlumber`.
+
+Repositório:
+<https://github.com/regiscaio/fedora-galaxy-book-sound>
+
+Neste repositório principal eu não mantenho screenshots locais do app de som.
+O preview visual e a evolução da interface ficam no repositório dedicado.
+
 ---
 
 ## Estado Atual
@@ -228,7 +248,7 @@ Modal `Sobre`:
 
 | Componente            | Estado revalidado em abril de 2026 | Leitura prática atual                                                                                                                                                          |
 | :-------------------- | :--------------------------------: | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Áudio interno**     |              Funciona              | O caminho atual dos alto-falantes internos já funciona com a linha dedicada `MAX98390`, empacotada em `fedora-galaxy-book-max98390` e integrada ao `fedora-galaxy-book-setup`. |
+| **Áudio interno**     |              Funciona              | O caminho atual dos alto-falantes internos já funciona com a linha dedicada `MAX98390`, integrada ao `fedora-galaxy-book-setup`, e o ajuste fino fica no `Galaxy Book Sound`. |
 | **Câmera interna**    |              Funciona              | O stack atual já permite usar a câmera tanto no app nativo do Fedora quanto na solução dedicada, com `ov02c10` empacotado, `Galaxy Book Câmera` e `Galaxy Book Setup`.         |
 | **Leitor de digital** |          Parcial/instável          | O `fprintd` detecta o sensor Egis, mas cadastro persistente e comportamento pós-suspensão ainda precisam de validação contínua.                                                |
 | **NVIDIA RTX 4070**   |       Funciona c/ ressalvas        | Os módulos proprietários carregam, inclusive com Secure Boot ativo, mas updates de kernel e ferramentas de verificação ainda exigem atenção.                                   |
@@ -250,6 +270,9 @@ no próprio README e passou a ser mantido em repositórios dedicados:
 - [`fedora-galaxy-book-setup`](https://github.com/regiscaio/fedora-galaxy-book-setup)
   organiza os diagnósticos e as ações rápidas para o caminho dos alto-falantes
   internos.
+- [`fedora-galaxy-book-sound`](https://github.com/regiscaio/fedora-galaxy-book-sound)
+  concentra o equalizador, os perfis e o modo `Atmos compatível` em uma UI
+  nativa do GNOME com backend próprio em `PipeWire`.
 
 Em outras palavras: o áudio interno já saiu do estado de “investigação local”
 e entrou num fluxo instalável e reproduzível no Fedora.
@@ -262,7 +285,7 @@ Hoje, o caminho que faz sentido para o áudio é:
 
 ```bash
 sudo dnf config-manager addrepo --from-repofile=https://packages.caioregis.com/fedora/caioregis.repo
-sudo dnf install galaxybook-setup akmod-galaxybook-max98390
+sudo dnf install galaxybook-setup galaxybook-sound akmod-galaxybook-max98390
 ```
 
 Depois:
@@ -270,7 +293,9 @@ Depois:
 1. abra o `Galaxy Book Setup`;
 2. revise o diagnóstico `Alto-falantes internos`;
 3. execute a ação `Ativar alto-falantes internos`;
-4. valide a saída `Speaker` no sistema.
+4. abra o `Galaxy Book Sound` para aplicar um perfil base, ajustar o
+   equalizador e, se fizer sentido, ativar `Atmos compatível`;
+5. valide a saída `Speaker` no sistema.
 
 ### Verificação
 
@@ -322,7 +347,8 @@ speaker-test -c 2 -t wav
 >
 > O contexto de `ALC298` continua importante para upstream e para comparação de
 > comportamento com o Windows, mas o caminho prático do usuário final agora
-> deve passar pelo repositório dedicado `MAX98390` e pelo `Galaxy Book Setup`.
+> deve passar pelo repositório dedicado `MAX98390`, pelo `Galaxy Book Setup` e
+> pelo `Galaxy Book Sound`.
 
 > [!NOTE]
 > Se for necessário testar o lado mais histórico do codec, os modelos abaixo
