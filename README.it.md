@@ -18,9 +18,9 @@ sudo dnf install galaxybook-camera galaxybook-setup galaxybook-sound akmod-galax
 
 Questo flusso installa:
 
-- l'app fotocamera con UI nativa di GNOME;
-- l'assistente grafico per installazione e diagnosi;
-- l'app audio con equalizzatore, profili e toggle `Atmos compatibile` tramite PipeWire;
+- l'app fotocamera per l'uso quotidiano del notebook;
+- l'assistente grafico per installazione, validazione e diagnosi;
+- l'app audio per la regolazione quotidiana, con equalizzatore, profili e toggle `Atmos compatibile`;
 - il driver `ov02c10` impacchettato come `akmod`;
 - il supporto `MAX98390` impacchettato come `akmod` per gli altoparlanti interni.
 
@@ -31,7 +31,7 @@ Questo flusso installa:
 >
 > Il contenuto storico qui sotto è stato **riconvalidato il 5 aprile 2026** su un **Samsung Galaxy Book4 Ultra NP960XGL-XG1BR**, in esecuzione con **Fedora 43** e kernel **6.18.8-200.fc43.x86_64**.
 >
-> A partire dal **19 aprile 2026**, la soluzione della fotocamera e il supporto dedicato agli altoparlanti interni sono stati mantenuti in repository separati, con driver, app fotocamera con UI nativa di GNOME, assistente di installazione, app audio e driver audio distinti. Questo README continua a fungere da guida generale del notebook e rimanda a questi progetti quando si parla di webcam e audio.
+> A partire dal **19 aprile 2026**, la soluzione della fotocamera e il supporto dedicato agli altoparlanti interni sono stati mantenuti in repository separati, con driver, app fotocamera per l'uso quotidiano, assistente di installazione, app audio e driver audio distinti. Questo README continua a fungere da guida generale del notebook e rimanda a questi progetti quando si parla di webcam e audio.
 >
 > In questa revisione documentale del **21 aprile 2026**, la linea attuale dei progetti dedicati è riportata nelle seguenti versioni di pacchetto:
 >
@@ -111,13 +111,13 @@ webcam, audio, regolazione sonora e installazione:
 - [`fedora-galaxy-book-ov02c10`](https://github.com/regiscaio/fedora-galaxy-book-ov02c10)
   Driver `ov02c10` adattato e impacchettato come `akmod` per Fedora.
 - [`fedora-galaxy-book-camera`](https://github.com/regiscaio/fedora-galaxy-book-camera)
-  App fotocamera con UI nativa di GNOME in `GTK4` e `libadwaita`, che usa `libcamera`.
+  App fotocamera per il flusso principale di anteprima, foto e video sul Galaxy Book4 Ultra.
 - [`fedora-galaxy-book-setup`](https://github.com/regiscaio/fedora-galaxy-book-setup)
-  Assistente grafico di installazione e diagnosi per fotocamera, webcam in browser/comunicazioni, NVIDIA, profilo di utilizzo `balanced` della piattaforma e integrazioni GNOME.
+  Assistente grafico di installazione, validazione e diagnosi per fotocamera, webcam in browser/comunicazioni, NVIDIA, profilo di utilizzo `balanced` della piattaforma e integrazioni GNOME.
 - [`fedora-galaxy-book-max98390`](https://github.com/regiscaio/fedora-galaxy-book-max98390)
   Supporto `MAX98390` impacchettato come `akmod` per gli amplificatori degli altoparlanti interni.
 - [`fedora-galaxy-book-sound`](https://github.com/regiscaio/fedora-galaxy-book-sound)
-  App audio nativa in `GTK4` e `libadwaita` per equalizzatore, profili e `Atmos compatibile`, con backend proprio in `PipeWire`.
+  App audio per applicare profili, regolare l'equalizzatore e usare `Atmos compatibile` nell'uso quotidiano del notebook.
 
 Questi cinque progetti consolidano la linea attuale di webcam, audio e diagnosi
 sul Galaxy Book4 Ultra e riducono la necessità di ripetere script e workaround
@@ -128,7 +128,7 @@ sparsi dentro questa guida principale.
 Il flusso che oggi ha più senso per chi vuole usare la webcam su Fedora è:
 
 1. installare il driver `ov02c10` impacchettato in `fedora-galaxy-book-ov02c10`;
-2. installare l'app `Galaxy Book Câmera`, con UI nativa di GNOME;
+2. installare l'app `Galaxy Book Câmera` per l'uso quotidiano della webcam;
 3. usare `Galaxy Book Setup` per la diagnosi, il ripristino dello stack Intel IPU6 e l'esposizione della fotocamera a browser e applicazioni di comunicazione.
 
 In altre parole: questo repository principale continua a essere la **guida generale del notebook**, mentre la manutenzione attiva della webcam è passata ai tre progetti dedicati sopra.
@@ -147,7 +147,7 @@ In pratica, il problema non era solo "aprire la fotocamera":
 Per questo la soluzione è stata divisa in tre fronti:
 
 - un repository per il driver;
-- un'app fotocamera con UI nativa di GNOME per il flusso principale di anteprima, foto e video;
+- un'app fotocamera per il flusso principale di anteprima, foto e video;
 - un assistente grafico per installazione, riparazione e compatibilità con il resto del sistema.
 
 In altre parole: l'obiettivo non è stato abbandonare l'app nativa di Fedora per preferenza, ma creare una soluzione dedicata per un hardware che, in questo caso, richiedeva più del flusso generico del desktop.
@@ -172,7 +172,7 @@ In altre parole: oggi entrambi i percorsi possono funzionare, ma servono priorit
     </td>
     <td valign="middle">
       <strong>Galaxy Book Câmera</strong><br>
-      App fotocamera con UI nativa di GNOME per il flusso principale di anteprima, foto e video sul Galaxy Book4 Ultra.<br>
+      App fotocamera per il flusso principale di anteprima, foto e video sul Galaxy Book4 Ultra.<br>
       Repository: <a href="https://github.com/regiscaio/fedora-galaxy-book-camera">github.com/regiscaio/fedora-galaxy-book-camera</a>
     </td>
   </tr>
@@ -195,7 +195,7 @@ Finestra modale `Informazioni`:
     </td>
     <td valign="middle">
       <strong>Galaxy Book Setup</strong><br>
-      Assistente grafico di installazione, riparazione e diagnosi per fotocamera, browser/comunicazioni, NVIDIA e integrazioni desktop.<br>
+      Assistente grafico di installazione, validazione, riparazione e diagnosi per fotocamera, browser/comunicazioni, NVIDIA e integrazioni desktop.<br>
       Repository: <a href="https://github.com/regiscaio/fedora-galaxy-book-setup">github.com/regiscaio/fedora-galaxy-book-setup</a>
     </td>
   </tr>
@@ -267,8 +267,8 @@ In pratica, l'audio interno non dipende più da un insieme di quirks sparsi nel 
 - [`fedora-galaxy-book-setup`](https://github.com/regiscaio/fedora-galaxy-book-setup)
   organizza la diagnostica e le azioni rapide per il percorso degli altoparlanti interni.
 - [`fedora-galaxy-book-sound`](https://github.com/regiscaio/fedora-galaxy-book-sound)
-  concentra equalizzatore, profili e modalità `Atmos compatibile` in una UI
-  nativa GNOME con backend proprio in `PipeWire`.
+  concentra equalizzatore, profili e modalità `Atmos compatibile` in un'app
+  audio pensata per l'uso quotidiano del notebook.
 
 In altre parole: l'audio interno è uscito dallo stato di "indagine locale" ed è entrato in un flusso installabile e riproducibile su Fedora.
 
@@ -356,7 +356,7 @@ speaker-test -c 2 -t wav
 
 ## Fotocamera interna (IPU6/OV02C10)
 
-La fotocamera interna del Galaxy Book4 Ultra **ha iniziato a funzionare con una soluzione dedicata**, composta da un driver `ov02c10` adattato, un'app fotocamera con UI nativa di GNOME e un assistente grafico di installazione e diagnosi.
+La fotocamera interna del Galaxy Book4 Ultra **ha iniziato a funzionare con una soluzione dedicata**, composta da un driver `ov02c10` adattato, un'app fotocamera per uso quotidiano e un assistente grafico di installazione e diagnosi.
 
 > [!IMPORTANT]
 > Il resoconto upstream su [bugzilla.kernel.org](https://bugzilla.kernel.org/show_bug.cgi?id=220364) continua a essere rilevante per spiegare il guasto originale del sensore OmniVision OV02C10. Il problema di base resta il clock esterno da `26 MHz`, incompatibile con il percorso in-tree del driver che si aspettava `19.2 MHz`.
@@ -379,7 +379,7 @@ I repository che concentrano questa soluzione sono:
 - [`fedora-galaxy-book-ov02c10`](https://github.com/regiscaio/fedora-galaxy-book-ov02c10)
   mantiene il modulo `ov02c10` allineato allo stack Intel IPU6 di Fedora, il pacchetto `akmod` e il caricamento automatico del driver al boot;
 - [`fedora-galaxy-book-camera`](https://github.com/regiscaio/fedora-galaxy-book-camera)
-  fornisce l'app fotocamera con UI nativa di GNOME per l'uso quotidiano;
+  fornisce l'app fotocamera per l'uso quotidiano sul Galaxy Book4 Ultra;
 - [`fedora-galaxy-book-setup`](https://github.com/regiscaio/fedora-galaxy-book-setup)
   organizza diagnostica e azioni rapide per installazione, riparazione, regolazione della priorità del driver, ripristino dello stack Intel IPU6 e attivazione della webcam V4L2 per browser e comunicazioni, oltre a seguire anche NVIDIA, il profilo `balanced` e le integrazioni desktop.
 
@@ -387,7 +387,7 @@ Il lavoro in questi repository parte dagli insegnamenti della correzione comunit
 
 - <https://github.com/abdallah-alkanani/galaxybook3-ov02c10-fix/>
 
-Oggi, se mi serve la webcam su Fedora, il percorso consigliato non è più insistere con vecchi workaround manuali dentro questo repository, ma usare il driver dedicato e l'app con UI nativa di GNOME mantenuti nei repository sopra.
+Oggi, se mi serve la webcam su Fedora, il percorso consigliato non è più insistere con vecchi workaround manuali dentro questo repository, ma usare il driver dedicato e l'app fotocamera mantenuti nei repository sopra.
 
 > [!NOTE]
 > Quando aggiorni gli RPM locali del driver fuori da un repository, includi insieme
