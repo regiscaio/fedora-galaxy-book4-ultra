@@ -35,8 +35,8 @@ Esse fluxo instala:
 > A linha atual dos projetos dedicados foi **verificada em 20 de abril de 2026** em um **Samsung Galaxy Book4 Ultra NP960XGL-XG1BR**, rodando **Fedora 44** com kernel **6.19.10-300.fc44.x86_64**, nas seguintes versões:
 >
 > - `fedora-galaxy-book-ov02c10`: **1.0.0-1**
-> - `fedora-galaxy-book-camera`: **1.0.0-2**
-> - `fedora-galaxy-book-setup`: **1.0.0-4**
+> - `fedora-galaxy-book-camera`: **1.0.0-1**
+> - `fedora-galaxy-book-setup`: **1.0.0-1**
 > - `fedora-galaxy-book-max98390`: **1.0.0-1**
 
 | Especificação         | Detalhes                                                                            |
@@ -573,3 +573,8 @@ nvidia-smi
 - [Relato de tentativa de engenharia reversa para alto-falantes internos no EndeavourOS](https://github.com/dgunay/galaxy-book4-pro-reverse-engineering)
 - [Relato com uso do Fedora 42 (KDE) com medições de desempenho da Intel Xe Iris](https://github.com/jusqua/galaxy-book4-linux)
 - [Fix comunitário do Galaxy Book3 para o driver OV02C10 da câmera](https://github.com/abdallah-alkanani/galaxybook3-ov02c10-fix)
+
+## Licença
+
+Este repositório é distribuído sob a licença **GPL-3.0-only**. Veja o arquivo
+[LICENSE](LICENSE).

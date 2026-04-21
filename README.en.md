@@ -35,30 +35,30 @@ This flow installs:
 > The current line of the dedicated projects was **verified on April 20, 2026** on a **Samsung Galaxy Book4 Ultra NP960XGL-XG1BR**, running **Fedora 44** with kernel **6.19.10-300.fc44.x86_64**, with the following versions:
 >
 > - `fedora-galaxy-book-ov02c10`: **1.0.0-1**
-> - `fedora-galaxy-book-camera`: **1.0.0-2**
-> - `fedora-galaxy-book-setup`: **1.0.0-4**
+> - `fedora-galaxy-book-camera`: **1.0.0-1**
+> - `fedora-galaxy-book-setup`: **1.0.0-1**
 > - `fedora-galaxy-book-max98390`: **1.0.0-1**
 
-| Specification        | Details                                                                            |
-| -------------------- | :---------------------------------------------------------------------------------- |
-| **Model**            | Samsung Galaxy Book4 Ultra (NP960XGL, NP960XGL-XG1BR, NP960XGLZ-EXP...)             |
-| **Display**          | 16" WQXGA+ (2880 x 1800) AMOLED Touchscreen                                         |
-| **Processor**        | Intel Core Ultra 9 185H (Meteor Lake, 16C/22T, up to 5.1 GHz, 24 MB cache)          |
-| **GPU**              | NVIDIA GeForce RTX 4070 Laptop 8 GB GDDR6                                           |
-| **RAM**              | 32 GB LPDDR5X (soldered, not expandable)                                             |
-| **Storage**          | 1 TB NVMe PCIe Gen4 SSD (expandable via secondary M.2 slot, depending on model)    |
-| **Battery**          | 76 Wh (built-in, lithium-ion)                                                       |
-| **Charger**          | 140 W USB-C (20V, 5A or 28V, 5A)                                                    |
-| **Ports**            | 2x Thunderbolt 4 (USB-C), 1x HDMI 2.1, 1x USB-A 3.2, 1x 3.5 mm audio jack, 1x MicroSD |
-| **Wireless**         | Wi-Fi 6E (802.11ax), Bluetooth 5.3                                                  |
-| **Webcam**           | 1080p FHD, OmniVision OV02C10 sensor, IPU6 (MIPI)                                   |
-| **Audio**            | 2x stereo speakers (AKG), dual microphone, Realtek ALC298 codec                    |
-| **Keyboard**         | Backlit keyboard, ABNT2 (BR) or US layout, integrated fingerprint sensor            |
-| **Touchpad**         | Large, Windows Precision gesture-compatible                                         |
-| **Fingerprint**      | Integrated into the power button, Windows Hello-compatible                         |
-| **Dimensions**       | 355.4 x 250.4 x 16.5 mm                                                             |
-| **Other**            | Ambient light sensor, Samsung Multi Control support, Second Screen, Quick Share    |
-| **Certifications**    | ENERGY STAR, RoHS, FCC, CE                                                          |
+| Specification      | Details                                                                               |
+| ------------------ | :------------------------------------------------------------------------------------ |
+| **Model**          | Samsung Galaxy Book4 Ultra (NP960XGL, NP960XGL-XG1BR, NP960XGLZ-EXP...)               |
+| **Display**        | 16" WQXGA+ (2880 x 1800) AMOLED Touchscreen                                           |
+| **Processor**      | Intel Core Ultra 9 185H (Meteor Lake, 16C/22T, up to 5.1 GHz, 24 MB cache)            |
+| **GPU**            | NVIDIA GeForce RTX 4070 Laptop 8 GB GDDR6                                             |
+| **RAM**            | 32 GB LPDDR5X (soldered, not expandable)                                              |
+| **Storage**        | 1 TB NVMe PCIe Gen4 SSD (expandable via secondary M.2 slot, depending on model)       |
+| **Battery**        | 76 Wh (built-in, lithium-ion)                                                         |
+| **Charger**        | 140 W USB-C (20V, 5A or 28V, 5A)                                                      |
+| **Ports**          | 2x Thunderbolt 4 (USB-C), 1x HDMI 2.1, 1x USB-A 3.2, 1x 3.5 mm audio jack, 1x MicroSD |
+| **Wireless**       | Wi-Fi 6E (802.11ax), Bluetooth 5.3                                                    |
+| **Webcam**         | 1080p FHD, OmniVision OV02C10 sensor, IPU6 (MIPI)                                     |
+| **Audio**          | 2x stereo speakers (AKG), dual microphone, Realtek ALC298 codec                       |
+| **Keyboard**       | Backlit keyboard, ABNT2 (BR) or US layout, integrated fingerprint sensor              |
+| **Touchpad**       | Large, Windows Precision gesture-compatible                                           |
+| **Fingerprint**    | Integrated into the power button, Windows Hello-compatible                            |
+| **Dimensions**     | 355.4 x 250.4 x 16.5 mm                                                               |
+| **Other**          | Ambient light sensor, Samsung Multi Control support, Second Screen, Quick Share       |
+| **Certifications** | ENERGY STAR, RoHS, FCC, CE                                                            |
 
 * [User Manual](https://downloadcenter.samsung.com/content/UM/202506/20250618100447559/94xXGK_96xXGK_96xXGL_Win11_UM_ENG_Rev.2.0_250602.pdf)
 * [Specifications](https://www.samsung.com/br/support/model/NP960XGL-XG1BR/)
@@ -210,13 +210,13 @@ Diagnostics screen:
 ## Current Status
 
 
-| Component           | Revalidated status in April 2026 | Current practical reading                                                                                                                                                  |
-| :------------------ | :------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Internal audio**  |              Works               | The current internal speaker path already works with the dedicated `MAX98390` line, packaged in `fedora-galaxy-book-max98390` and integrated into `fedora-galaxy-book-setup`. |
+| Component           | Revalidated status in April 2026 | Current practical reading                                                                                                                                                              |
+| :------------------ | :------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Internal audio**  |              Works               | The current internal speaker path already works with the dedicated `MAX98390` line, packaged in `fedora-galaxy-book-max98390` and integrated into `fedora-galaxy-book-setup`.          |
 | **Internal camera** |              Works               | The current stack already allows using the camera both in the native Fedora app and in the dedicated solution, with packaged `ov02c10`, `Galaxy Book Câmera`, and `Galaxy Book Setup`. |
-| **Fingerprint**    |          Partial/unstable        | `fprintd` detects the Egis sensor, but persistent enrollment and post-suspend behavior still need continuous validation.                                                    |
-| **NVIDIA RTX 4070**|        Works with caveats        | Proprietary modules load, including with Secure Boot enabled, but kernel updates and verification tools still require attention.                                            |
-| **BIOS/Firmware**  |          Recent risks            | Recent updates are still associated with throttling, dock failures, and Bluetooth regressions.                                                                             |
+| **Fingerprint**     |         Partial/unstable         | `fprintd` detects the Egis sensor, but persistent enrollment and post-suspend behavior still need continuous validation.                                                               |
+| **NVIDIA RTX 4070** |        Works with caveats        | Proprietary modules load, including with Secure Boot enabled, but kernel updates and verification tools still require attention.                                                       |
+| **BIOS/Firmware**   |           Recent risks           | Recent updates are still associated with throttling, dock failures, and Bluetooth regressions.                                                                                         |
 
 ---
 
@@ -530,13 +530,13 @@ nvidia-smi
 
 ## Quick Diagnostics
 
-| Component   | Diagnostic Command                                                                                                         |
-| :---------- | :------------------------------------------------------------------------------------------------------------------------- |
-| **Kernel**  | `uname -r`                                                                                                                 |
-| **Audio**   | `aplay -l && wpctl status && cat /sys/module/snd_hda_intel/parameters/model && cat /sys/module/snd_hda_intel/parameters/patch` |
-| **Camera**  | `modinfo -n ov02c10 && journalctl -b -k \| grep -i ov02c10 && cam -l && journalctl -b -u akmods --no-pager`                |
-| **Fingerprint** | `fprintd-list $USER && systemctl status fprintd.service --no-pager && journalctl -b \| grep -i fprint`                   |
-| **NVIDIA**  | `lsmod \| grep nvidia && mokutil --sb-state && rpm -qa \| grep -i nvidia`                                                  |
+| Component       | Diagnostic Command                                                                                                             |
+| :-------------- | :----------------------------------------------------------------------------------------------------------------------------- |
+| **Kernel**      | `uname -r`                                                                                                                     |
+| **Audio**       | `aplay -l && wpctl status && cat /sys/module/snd_hda_intel/parameters/model && cat /sys/module/snd_hda_intel/parameters/patch` |
+| **Camera**      | `modinfo -n ov02c10 && journalctl -b -k \| grep -i ov02c10 && cam -l && journalctl -b -u akmods --no-pager`                    |
+| **Fingerprint** | `fprintd-list $USER && systemctl status fprintd.service --no-pager && journalctl -b \| grep -i fprint`                         |
+| **NVIDIA**      | `lsmod \| grep nvidia && mokutil --sb-state && rpm -qa \| grep -i nvidia`                                                      |
 
 ## Other Reports
 
@@ -546,3 +546,7 @@ nvidia-smi
 - [Reverse-engineering attempt report for internal speakers on EndeavourOS](https://github.com/dgunay/galaxy-book4-pro-reverse-engineering)
 - [Report using Fedora 42 (KDE) with Intel Xe Iris performance measurements](https://github.com/jusqua/galaxy-book4-linux)
 - [Community fix for the Galaxy Book3 OV02C10 camera driver](https://github.com/abdallah-alkanani/galaxybook3-ov02c10-fix)
+
+## License
+
+This repository is distributed under **GPL-3.0-only**. See [LICENSE](LICENSE).
