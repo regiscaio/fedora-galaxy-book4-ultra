@@ -192,14 +192,6 @@ prioridad es detalle, ajuste del sensor y flexibilidad de ajuste.
   </tr>
 </table>
 
-Pantalla principal:
-
-![Galaxy Book Câmera — pantalla principal](img/app-camera-galaxy.png)
-
-Modal `Sobre`:
-
-![Galaxy Book Câmera — Sobre](img/app-camera-galaxy-about.png)
-
 #### Galaxy Book Setup
 
 <table>
@@ -215,18 +207,6 @@ Modal `Sobre`:
   </tr>
 </table>
 
-Pantalla inicial:
-
-![Galaxy Book Setup — pantalla inicial](img/app-setup-galaxy.png)
-
-Pantalla de diagnósticos:
-
-![Galaxy Book Setup — diagnósticos](img/app-setup-galaxy-diagnostic.png)
-
-Modal `Sobre`:
-
-![Galaxy Book Setup — Sobre](img/app-setup-galaxy-about.png)
-
 #### Galaxy Book Sound
 
 <table>
@@ -236,24 +216,11 @@ Modal `Sobre`:
     </td>
     <td valign="middle">
       <strong>Galaxy Book Sound</strong><br>
-      App nativa de sonido para el Galaxy Book4 Ultra, con UI de GNOME para aplicar perfiles base, ajustar el ecualizador de 10 bandas y activar el modo <code>Atmos compatible</code> en el uso diario del portátil.<br>
+      App de sonido para aplicar perfiles, ajustar el ecualizador y usar <code>Atmos compatible</code> en el día a día del portátil.<br>
       Repositorio: <a href="https://github.com/regiscaio/fedora-galaxy-book-sound">github.com/regiscaio/fedora-galaxy-book-sound</a>
     </td>
   </tr>
 </table>
-
-La app sigue la misma línea de los otros componentes dedicados del stack:
-interfaz corta, foco en el ajuste diario del portátil y un modal `Acerca de`
-con lenguaje más directo y amigable, sin caer en una descripción demasiado
-técnica en la primera lectura.
-
-Por debajo, el backend sigue siendo propio y está mantenido con `PipeWire` y
-`WirePlumber`, pero ese detalle queda en segundo plano en la presentación de
-la app.
-
-Este repositorio principal no mantiene capturas locales de la app de sonido.
-La vista previa visual y la evolución de la interfaz continúan en el
-repositorio dedicado.
 
 ---
 
@@ -387,7 +354,7 @@ La cámara interna del Galaxy Book4 Ultra **pasó a funcionar con una solución 
 >
 > La diferencia es que ahora existe un camino funcional mantenido fuera de esta guía principal.
 
-![Galaxy Book Câmera — flujo principal](img/app-camera-galaxy.png)
+![Galaxy Book Câmera — flujo principal](https://raw.githubusercontent.com/regiscaio/fedora-galaxy-book-camera/master/img/app-camera-galaxy-1.png)
 
 ### Solución actual
 

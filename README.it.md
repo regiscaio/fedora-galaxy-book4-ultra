@@ -178,14 +178,6 @@ In altre parole: oggi entrambi i percorsi possono funzionare, ma servono priorit
   </tr>
 </table>
 
-Schermata principale:
-
-![Galaxy Book Câmera — schermata principale](img/app-camera-galaxy.png)
-
-Finestra modale `Informazioni`:
-
-![Galaxy Book Câmera — Informazioni](img/app-camera-galaxy-about.png)
-
 #### Galaxy Book Setup
 
 <table>
@@ -201,18 +193,6 @@ Finestra modale `Informazioni`:
   </tr>
 </table>
 
-Schermata iniziale:
-
-![Galaxy Book Setup — schermata iniziale](img/app-setup-galaxy.png)
-
-Schermata diagnostica:
-
-![Galaxy Book Setup — diagnostica](img/app-setup-galaxy-diagnostic.png)
-
-Finestra modale `Informazioni`:
-
-![Galaxy Book Setup — Informazioni](img/app-setup-galaxy-about.png)
-
 #### Galaxy Book Sound
 
 <table>
@@ -222,24 +202,11 @@ Finestra modale `Informazioni`:
     </td>
     <td valign="middle">
       <strong>Galaxy Book Sound</strong><br>
-      App audio nativa per il Galaxy Book4 Ultra, con UI in stile GNOME per applicare profili base, regolare l'equalizzatore a 10 bande e attivare la modalità <code>Atmos compatibile</code> nell'uso quotidiano del notebook.<br>
+      App audio per applicare profili, regolare l'equalizzatore e usare <code>Atmos compatibile</code> nell'uso quotidiano del notebook.<br>
       Repository: <a href="https://github.com/regiscaio/fedora-galaxy-book-sound">github.com/regiscaio/fedora-galaxy-book-sound</a>
     </td>
   </tr>
 </table>
-
-L'app segue la stessa linea degli altri componenti dedicati dello stack:
-interfaccia corta, focus sulla regolazione quotidiana del notebook e una
-finestra `Informazioni` con linguaggio più diretto e amichevole, senza partire
-subito da una descrizione eccessivamente tecnica.
-
-Sotto il cofano, il backend resta proprietario, mantenuto con `PipeWire` e
-`WirePlumber`, ma questo dettaglio resta in secondo piano nella presentazione
-dell'app.
-
-Questo repository principale non mantiene screenshot locali dell'app audio. Le
-anteprime visive e l'evoluzione dell'interfaccia continuano a restare nel
-repository dedicato.
 
 ---
 
@@ -370,7 +337,7 @@ La fotocamera interna del Galaxy Book4 Ultra **ha iniziato a funzionare con una 
 >
 > La differenza è che ora esiste un percorso funzionante mantenuto fuori da questa guida principale.
 
-![Galaxy Book Câmera — flusso principale](img/app-camera-galaxy.png)
+![Galaxy Book Câmera — flusso principale](https://raw.githubusercontent.com/regiscaio/fedora-galaxy-book-camera/master/img/app-camera-galaxy-1.png)
 
 ### Soluzione attuale
 

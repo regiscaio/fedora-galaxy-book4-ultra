@@ -194,14 +194,6 @@ ajuste.
   </tr>
 </table>
 
-Tela principal:
-
-![Galaxy Book Câmera — tela principal](img/app-camera-galaxy.png)
-
-Modal `Sobre`:
-
-![Galaxy Book Câmera — Sobre](img/app-camera-galaxy-about.png)
-
 #### Galaxy Book Setup
 
 <table>
@@ -217,18 +209,6 @@ Modal `Sobre`:
   </tr>
 </table>
 
-Tela inicial:
-
-![Galaxy Book Setup — tela inicial](img/app-setup-galaxy.png)
-
-Tela de diagnósticos:
-
-![Galaxy Book Setup — diagnósticos](img/app-setup-galaxy-diagnostic.png)
-
-Modal `Sobre`:
-
-![Galaxy Book Setup — Sobre](img/app-setup-galaxy-about.png)
-
 #### Galaxy Book Sound
 
 <table>
@@ -238,22 +218,11 @@ Modal `Sobre`:
     </td>
     <td valign="middle">
       <strong>Galaxy Book Sound</strong><br>
-      App nativo de som para o Galaxy Book4 Ultra, com UI do GNOME para aplicar perfis base, ajustar o equalizador de 10 bandas e ativar o modo <code>Atmos compatível</code> no uso diário do notebook.<br>
+      App de som para aplicar perfis, ajustar o equalizador e usar <code>Atmos compatível</code> no dia a dia do notebook.<br>
       Repositório: <a href="https://github.com/regiscaio/fedora-galaxy-book-sound">github.com/regiscaio/fedora-galaxy-book-sound</a>
     </td>
   </tr>
 </table>
-
-O app segue a mesma linha dos outros componentes dedicados do stack: interface
-curta, foco no ajuste diário do notebook e um modal `Sobre` com linguagem mais
-direta e amigável, sem cair em descrição excessivamente técnica logo na
-primeira leitura.
-
-Por baixo, o backend continua sendo próprio, mantido com `PipeWire` e
-`WirePlumber`, mas esse detalhe fica em segundo plano na apresentação do app.
-
-Neste repositório principal eu não mantenho screenshots locais do app de som.
-O preview visual e a evolução da interface continuam no repositório dedicado.
 
 ---
 
@@ -390,7 +359,7 @@ A câmera interna do Galaxy Book4 Ultra **passou a funcionar com uma solução d
 >
 > A diferença é que agora existe um caminho funcional mantido fora deste guia principal.
 
-![Galaxy Book Câmera — fluxo principal](img/app-camera-galaxy.png)
+![Galaxy Book Câmera — fluxo principal](https://raw.githubusercontent.com/regiscaio/fedora-galaxy-book-camera/master/img/app-camera-galaxy-1.png)
 
 ### Solução atual
 
