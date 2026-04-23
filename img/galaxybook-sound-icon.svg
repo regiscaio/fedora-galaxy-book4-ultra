@@ -9,15 +9,6 @@
       <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_1_1"/>
       <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_1_1" result="shape"/>
     </filter>
-    <filter id="barShadow" x="55" y="69" width="146" height="122" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-      <feFlood flood-opacity="0" result="BackgroundImageFix"/>
-      <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-      <feOffset dy="2"/>
-      <feGaussianBlur stdDeviation="1.6"/>
-      <feColorMatrix type="matrix" values="0 0 0 0 0.10 0 0 0 0 0.04 0 0 0 0 0.18 0 0 0 0.18 0"/>
-      <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_1_1"/>
-      <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_1_1" result="shape"/>
-    </filter>
     <linearGradient id="cardFill" x1="48" y1="34" x2="208" y2="230" gradientUnits="userSpaceOnUse">
       <stop stop-color="#BC3FE8"/>
       <stop offset="0.42" stop-color="#8D24D5"/>
@@ -47,7 +38,11 @@
     <rect x="18" y="18" width="220" height="220" rx="46" fill="url(#cardGlow)"/>
   </g>
 
-  <g filter="url(#barShadow)">
+  <g>
+    <rect x="63" y="113" width="16" height="38" rx="8" fill="#1C0635" fill-opacity="0.20"/>
+    <rect x="101" y="94.5" width="16" height="75" rx="8" fill="#1C0635" fill-opacity="0.20"/>
+    <rect x="139" y="76" width="16" height="112" rx="8" fill="#1C0635" fill-opacity="0.20"/>
+    <rect x="177" y="104" width="16" height="56" rx="8" fill="#1C0635" fill-opacity="0.20"/>
     <rect x="63" y="109" width="16" height="38" rx="8" fill="url(#whiteBar)"/>
     <rect x="101" y="90.5" width="16" height="75" rx="8" fill="url(#yellowBar)"/>
     <rect x="139" y="72" width="16" height="112" rx="8" fill="url(#cyanBar)"/>
